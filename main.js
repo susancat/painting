@@ -810,29 +810,34 @@ Menu.prototype = {
         this.backgroundColor.style.cursor = "pointer";
         this.backgroundColor.width = e;
         this.backgroundColor.height = a;
-				this.backgroundColor.title = "Change Background Color";//added 05/01/17 MEDavy
+        this.backgroundColor.title = "Change Background Color";//added 05/01/17 MEDavy
         this.container.appendChild(this.backgroundColor);
         this.setBackgroundColor(BACKGROUND_COLOR);
         c = document.createTextNode(" ");
         this.container.appendChild(c);
-				//begin add 05/01/17 MEDavy
-				this.fileButton = document.createElement("span");
+        //begin add 05/01/17 MEDavy
+        this.fileButton = document.createElement("span");
         this.fileButton.className = "button";
-				this.fileButton.id = "fileButton";
+        this.fileButton.id = "fileButton";
         this.fileButton.innerHTML = "Upload";
-				this.fileButton.title = "Load image as background (or press 'o)";
+        this.fileButton.title = "Load image as background (or press 'o)";
+        if (IOS){//if the browser is ios the button won't work so hide it
+          this.fileButton.style = "display:none;";
+	}
         this.container.appendChild(this.fileButton);
-				
-				this.files = document.createElement("input");
+        
+        this.files = document.createElement("input");
         this.files.type = "file";
-				this.files.id = "files";
-        this.files.style = style="display:none;";
-				this.files.title = "Load image as background(or press 'o)";
+        this.files.id = "files";
+	if (!IOS){//if the browser is ios the button won't work so show the picker
+          this.filea.style = "display:none;";
+	}
+        this.files.title = "Load image as background(or press 'o)";
         this.container.appendChild(this.files);
-				c = document.createTextNode(" ");
+        c = document.createTextNode(" ");
         this.container.appendChild(c);
 				
-				this.pointerSize = document.createElement("span");
+        this.pointerSize = document.createElement("span");
         this.pointerSize.className = "button";
 				this.pointerSize.id = "pointerSize";
         this.pointerSize.innerHTML = "1px";
@@ -959,6 +964,7 @@ var SCREEN_WIDTH = window.innerWidth,
     SCREEN_HEIGHT = window.innerHeight,
     BRUSH_SIZE = 1,
     BRUSH_PRESSURE = 1,
+    IOS = false,
     COLOR = [0, 0, 0],
     BACKGROUND_COLOR = [250, 250, 250],
     STORAGE = window.localStorage,
@@ -979,6 +985,9 @@ function init() {
     }
     if (USER_AGENT.search("safari") > -1 && USER_AGENT.search("chrome") == -1) {
         STORAGE = false
+    }
+    if (/ipad|iphone|ipod/.test(USER_AGENT) && !window.MSStream) {
+      IOS = true;
     }
     container = document.createElement("div");
     document.body.appendChild(container);
