@@ -1013,24 +1013,24 @@ function init() {
     menu = new Menu();
     if (!IOS) {//added 05/01/17 MEDavy
       //in safari on ios, click events are generated on touchend
-      menu.foregroundColor.addEventListener("touchend", onMenuForegroundColor, false);
-      menu.backgroundColor.addEventListener("touchend", onMenuBackgroundColor, false);
-      menu.save.addEventListener("touchend", onMenuSave, false);
-      menu.clear.addEventListener("touchend", onMenuClear, false);
-      menu.about.addEventListener("touchend", onMenuAbout, false);
-      menu.pointerSize.addEventListener("touchend", onMenuPointerSize, false);
-      menu.resetButton.addEventListener("touchend", onMenuReset, false);
+      menu.foregroundColor.addEventListener("click", onMenuForegroundColor, false);
+      menu.backgroundColor.addEventListener("click", onMenuBackgroundColor, false);
+      menu.save.addEventListener("click", onMenuSave, false);
+      menu.clear.addEventListener("click", onMenuClear, false);
+      menu.about.addEventListener("click", onMenuAbout, false);
+      menu.pointerSize.addEventListener("click", onMenuPointerSize, false);//added 05/01/17 MEDavy
+      menu.resetButton.addEventListener("click", onMenuReset, false);//added 05/01/17 MEDavy
+      menu.fileButton.addEventListener("click", onMenuFile, false);//added 05/01/17 MEDavy
     }
-    menu.foregroundColor.addEventListener("click", onMenuForegroundColor, false);
-    menu.backgroundColor.addEventListener("click", onMenuBackgroundColor, false);
-    menu.selector.addEventListener("change", onMenuSelectorChange, false);
-    menu.save.addEventListener("click", onMenuSave, false);
-    menu.clear.addEventListener("click", onMenuClear, false);
-    menu.about.addEventListener("click", onMenuAbout, false);
-    menu.pointerSize.addEventListener("click", onMenuPointerSize, false);//added 05/01/17 MEDavy
-    menu.resetButton.addEventListener("click", onMenuReset, false);//added 05/01/17 MEDavy
-    menu.fileButton.addEventListener("click", onMenuFile, false);//added 05/01/17 MEDavy
+    menu.foregroundColor.addEventListener("touchend", onMenuForegroundColor, false);
+    menu.backgroundColor.addEventListener("touchend", onMenuBackgroundColor, false);
+    menu.save.addEventListener("touchend", onMenuSave, false);
+    menu.clear.addEventListener("touchend", onMenuClear, false);
+    menu.about.addEventListener("touchend", onMenuAbout, false);
+    menu.pointerSize.addEventListener("touchend", onMenuPointerSize, false);
+    menu.resetButton.addEventListener("touchend", onMenuReset, false);
     menu.fileButton.addEventListener("touchend", onMenuFile, false);//added 05/01/17 MEDavy
+    menu.selector.addEventListener("change", onMenuSelectorChange, false);
     menu.files.addEventListener('change', handleFileSelect, false);
     menu.container.addEventListener("mouseover", onMenuMouseOver, false);
     menu.container.addEventListener("mouseout", onMenuMouseOut, false);
