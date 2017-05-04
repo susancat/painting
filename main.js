@@ -1078,7 +1078,8 @@ function init() {
     document.addEventListener("mouseout", onDocumentMouseOut, false);
     canvas.addEventListener("mousedown", onCanvasMouseDown, false);
     canvas.addEventListener("touchstart", onCanvasTouchStart, false);
-    onWindowResize(null)
+    onWindowResize(null);
+    alert(IOS);
 }
 
 function onWindowMouseMove(a) {
