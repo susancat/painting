@@ -843,14 +843,13 @@ Menu.prototype = {
 				
         this.pointerSize = document.createElement("span");
         this.pointerSize.className = "button";
-				this.pointerSize.id = "pointerSize";
+        this.pointerSize.id = "pointerSize";
         this.pointerSize.innerHTML = "1px";
-				this.pointerSize.title = "Pointer Size (change using up and down arrow keys)";//added 05/01/17 MEDavy
+        this.pointerSize.title = "Pointer Size (change using up and down arrow keys)";//added 05/01/17 MEDavy
         this.container.appendChild(this.pointerSize);
         c = document.createTextNode(" ");
         this.container.appendChild(c);
-				
-				//end add
+        //end add
         this.selector = document.createElement("select");
         for (i = 0; i < BRUSHES.length; i++) {
             b = document.createElement("option");
@@ -858,23 +857,23 @@ Menu.prototype = {
             b.innerHTML = BRUSHES[i].toUpperCase();
             this.selector.appendChild(b)
         }
-				this.selector.title = "Change Brush Styles";//added 05/01/17 MEDavy
+        this.selector.title = "Change Brush Styles";//added 05/01/17 MEDavy
         this.container.appendChild(this.selector);
         d = document.createTextNode(" | ");
         this.container.appendChild(d);
         this.save = document.createElement("span");
         this.save.className = "button";
         this.save.innerHTML = "Save";
-				this.save.title = "Save Canvas (or press 's')";//added 05/01/17 MEDavy
+        this.save.title = "Save Canvas (or press 's')";//added 05/01/17 MEDavy
         this.container.appendChild(this.save);
         c = document.createTextNode(" ");
         this.container.appendChild(c);
         this.clear = document.createElement("Clear");
         this.clear.className = "button";
         this.clear.innerHTML = "Clear";
-				this.clear.title = "Clear Canvas (or press 'delete')";//added 05/01/17 MEDavy
+        this.clear.title = "Clear Canvas (or press 'delete')";//added 05/01/17 MEDavy
         this.container.appendChild(this.clear);
-				//begin add 05/01/17 MEDavy
+        //begin add 05/01/17 MEDavy
 				c = document.createTextNode(" ");
         this.container.appendChild(c);
 				this.resetButton = document.createElement("span");
@@ -935,7 +934,7 @@ About.prototype = {
         a.appendChild(b);//edited 05/01/17 MEDavy
         b = document.createElement("p");
         b.style.textAlign = "center";
-        b.innerHTML = 'Shortcuts: </br><span class="key">UP</span>: increase brush size</br><span class="key">DOWN</span>: decrease brush size</br><span class="key">LEFT</span> default brush size<br /><span class="key">SHIFT</span>: open color picker<br /><span class="key">R</span>: reset brush<br /><span class="key">O</span>: upload background image<br /><span class="key">DELETE</span>: clear canvas<br /><span class="key">ESC</span>: close about window/color selector<br /><br/><a onclick="writeBackgroundData();" style="cursor:pointer;"><u>Brush Examples</u></a>';//changed to reflect code additions/changes - 05/01/17 MEDavy
+        b.innerHTML = 'Shortcuts: </br><span class="key" onclick="increaseBrush();">UP</span>: increase brush size</br><span class="key" onclick="decreaseBrush();">DOWN</span>: decrease brush size</br><span class="key">LEFT</span> default brush size<br /><span class="key">SHIFT</span>: open color picker<br /><span class="key">R</span>: reset brush<br /><span class="key">O</span>: upload background image<br /><span class="key">DELETE</span>: clear canvas<br /><span class="key">ESC</span>: close about window/color selector<br /><br/><a onclick="writeBackgroundData();" style="cursor:pointer;"><u>Brush Examples</u></a>';//changed to reflect code additions/changes - 05/01/17 MEDavy
         a.appendChild(b);
 				b = document.createElement("hr");//edited 05/01/17 MEDavy
         a.appendChild(b);//edited 05/01/17 MEDavy
@@ -1083,12 +1082,11 @@ function init() {
     canvas.addEventListener("mousedown", onCanvasMouseDown, false);
     canvas.addEventListener("touchstart", onCanvasTouchStart, false);
     onWindowResize(null);
-    alert(IOS);
 }
 
 function onWindowMouseMove(a) {
     mouseX = a.clientX;
-    mouseY = a.clientY
+    mouseY = a.clientY;
 }
 
 function onWindowResize() {
@@ -1116,17 +1114,17 @@ function onWindowKeyDown(a) {
         case 40://down arrow - changed from 'd' 05/01/16 MEDavy
             if (BRUSH_SIZE > 1) {
                 BRUSH_SIZE--
-								document.getElementById("pointerSize").innerHTML = BRUSH_SIZE+"px";//added 05/01/17 MEDavy
+                document.getElementById("pointerSize").innerHTML = BRUSH_SIZE+"px";//added 05/01/17 MEDavy
             }
             break;
         case 38://up arrow - changed from 'f' 05/01/16 MEDavy
             BRUSH_SIZE++;
-						document.getElementById("pointerSize").innerHTML = BRUSH_SIZE+"px";//added 05/01/17 MEDavy
+            document.getElementById("pointerSize").innerHTML = BRUSH_SIZE+"px";//added 05/01/17 MEDavy
             break
-				case 37://left arrow - added 05/01/16 MEDavy
-				    BRUSH_SIZE=1;//reset brush size
-						document.getElementById("pointerSize").innerHTML = BRUSH_SIZE+"px";//added 05/01/17 MEDavy
-						break
+        case 37://left arrow - added 05/01/16 MEDavy
+          BRUSH_SIZE=1;//reset brush size
+          document.getElementById("pointerSize").innerHTML = BRUSH_SIZE+"px";//added 05/01/17 MEDavy
+          break
 				case 8://delete key pressed - added by MEDavy 05/01/17
 				    onMenuClear();//promt the user to clear canvas
 				    break
