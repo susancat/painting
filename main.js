@@ -1280,7 +1280,12 @@ function onMenuAbout() {
 }
 
 function onMenuPointerSize() {//added 05/01/17 MEDavy
+  if (IOS) {
+    alert("To change the brush size:\nOpen the About menu, click 'UP' to increase size and 'DOWN' to decrease");
+  }
+  if (!IOS) {
     alert("To change the brush size:\n* Up Arrow to increase\n* Down Arrow to decrease\n* Left Arrow to reset");
+  }  
 }
 
 function onMenuReset() {//added 05/01/17 MEDavy
