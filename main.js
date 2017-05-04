@@ -830,7 +830,7 @@ Menu.prototype = {
         this.files.type = "file";
         this.files.id = "files";
 	if (!IOS){//if the browser is ios the button won't work so show the picker
-          this.filea.style = "display:none;";
+          this.files.style = "display:none;";
 	}
         this.files.title = "Load image as background(or press 'o)";
         this.container.appendChild(this.files);
