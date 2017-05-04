@@ -1097,6 +1097,18 @@ function onWindowResize() {
     about.container.style.top = ((SCREEN_HEIGHT - about.container.offsetHeight) / 2) + "px"
 }
 
+function increaseBrush() {//added 05/01/17 MEDavy
+  BRUSH_SIZE++;
+  document.getElementById("pointerSize").innerHTML = BRUSH_SIZE+"px";
+}
+
+function decreaseBrush() {//added 05/01/17 MEDavy
+  if (BRUSH_SIZE > 1) {
+    BRUSH_SIZE--
+    document.getElementById("pointerSize").innerHTML = BRUSH_SIZE+"px";
+  }
+}
+
 function onWindowKeyDown(a) {
     if (shiftKeyIsDown) {
         return
