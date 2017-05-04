@@ -1303,7 +1303,7 @@ function onMenuReset() {//added 05/01/17 MEDavy
 }
 
 function onMenuFile() {//added 05/02/17 MEDavy
-	menu.files.click();
+  menu.files.click();
 }
 
 function handleFileSelect() {//added 05/02/17 MEDavy
@@ -1312,6 +1312,9 @@ function handleFileSelect() {//added 05/02/17 MEDavy
     if (!window.FileReader) {
     	alert("Your browser does not support FileReader");
       return;
+    }
+    if (IOS) {
+      alert("Due to a limitation in iOS, the background image will not appear in saved image.");
     }
     if (!files.length) {
     	alert("You didn't select anything");
@@ -1322,12 +1325,12 @@ function handleFileSelect() {//added 05/02/17 MEDavy
     reader.onloadend = function(){
       // When loaded, set image data as background of page
       document.body.style.backgroundImage = "url(" + this.result + ")";
-			if (STORAGE) {//added 05/03/17 MEDavy
-				localStorage.bgimage = document.body.style.backgroundImage;
-			}
-			document.body.style.backgroundColor = "rgba(0,0,0,0)";
+      if (STORAGE) {//added 05/03/17 MEDavy
+        localStorage.bgimage = document.body.style.backgroundImage;
+      }
+      document.body.style.backgroundColor = "rgba(0,0,0,0)";
     }
-		onMenuClear();
+    onMenuClear();
 }
 
 function onCanvasMouseDown(b) {
@@ -1394,20 +1397,17 @@ function saveToLocalStorage() {
 }
 
 function flatten() {
-	//begin add 05/03/17 MEDavy
-	var d = document.createElement('span');
-	d.innerHTML= '<img id="scream" style="width:100%" src="'+document.body.style.backgroundImage.replace('url("', '').replace('")', '')+'" crossOrigin="Anonymous">';
-  document.body.appendChild(d.firstChild);
-  var img = document.getElementById("scream");
-	//end add
+  //begin add 05/03/17 MEDavy
+  var img = new Image;
+  img.src = document.body.style.backgroundImage.replace('url("', '').replace('")', '');
+  //end add
   var a = flattenCanvas.getContext("2d");
   a.fillStyle = "rgb(" + BACKGROUND_COLOR[0] + ", " + BACKGROUND_COLOR[1] + ", " + BACKGROUND_COLOR[2] + ")";
   a.fillRect(0, 0, canvas.width, canvas.height);
-	//begin add 05/03/17 MEDavy
-  a.drawImage(img, 0, 0, document.getElementById("scream").width, document.getElementById("scream").height);
+  //begin add 05/03/17 MEDavy
+  a.drawImage(img, 0, 0);
   a.drawImage(canvas, 0, 0);
-	//end add
-	document.getElementById("scream").remove();
+  //end add
 }
 
 function cleanPopUps() {
