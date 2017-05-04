@@ -932,7 +932,7 @@ About.prototype = {
         a.appendChild(b);//edited 05/01/17 MEDavy
         b = document.createElement("p");
         b.style.textAlign = "center";
-        b.innerHTML = '(The Info page created by Mr.doob is no longer available)</br><a href="http://github.com/mrdoob/harmony" target="_blank">Source Code</a> (outdated)';//edited 05/01/17 MEDavy
+        b.innerHTML = '(<a href="http://mrdoob.com/projects/harmony/" target="_blank">Original App</a></br><a href="https://github.com/MEDavy/sketchy" target="_blank">Source Code</a>';//edited 05/01/17 MEDavy
         a.appendChild(b);
         b = document.createElement("hr");
         a.appendChild(b);
