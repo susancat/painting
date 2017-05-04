@@ -1287,34 +1287,34 @@ function onMenuReset() {//added 05/01/17 MEDavy
   if (!confirm("Reset the brush?")) {
     return
   }
-	COLOR[0] = 0;
+  COLOR[0] = 0;
   COLOR[1] = 0;
-	COLOR[2] = 0;
-	menu.setForegroundColor(COLOR);
-	if (STORAGE) {
+  COLOR[2] = 0;
+  menu.setForegroundColor(COLOR);
+  BRUSH_SIZE = 1;//reset brush size
+  document.getElementById("pointerSize").innerHTML = BRUSH_SIZE+"px";//update pointer size display
+  if (STORAGE) {
     localStorage.brush_color_red = COLOR[0];
     localStorage.brush_color_green = COLOR[1];
     localStorage.brush_color_blue = COLOR[2]
   }
-	if (!document.body.style.backgroundImage){//if there is no background image
-		BACKGROUND_COLOR[0] = 255;
-	  BACKGROUND_COLOR[1] = 255;
-	  BACKGROUND_COLOR[2] = 255;
-		menu.setBackgroundColor(BACKGROUND_COLOR);
-		document.body.style.backgroundImage = "";
-		document.body.style.backgroundColor = "rgb(" + BACKGROUND_COLOR[0] + ", " + BACKGROUND_COLOR[1] + ", " + BACKGROUND_COLOR[2] + ")";
-		if (STORAGE) {
-			localStorage.background_color_red = BACKGROUND_COLOR[0];
-			localStorage.background_color_green = BACKGROUND_COLOR[1];
-			localStorage.background_color_blue = BACKGROUND_COLOR[2];
-			localStorage.bgimage = document.body.style.backgroundImage;//added 05/03/17 MEDavy
-		}
-	}//end if there is no background image
-	saveToLocalStorage();//save the file
-	BRUSH_SIZE = 1;//reset brush size
-	menu.selector.selectedIndex = 0;//reset brush type
-	onMenuSelectorChange();//reset brush type
-	document.getElementById("pointerSize").innerHTML = BRUSH_SIZE+"px";//update pointer size display
+  if (!document.body.style.backgroundImage){//if there is no background image
+    BACKGROUND_COLOR[0] = 255;
+    BACKGROUND_COLOR[1] = 255;
+    BACKGROUND_COLOR[2] = 255;
+    menu.setBackgroundColor(BACKGROUND_COLOR);
+    document.body.style.backgroundImage = "";
+    document.body.style.backgroundColor = "rgb(" + BACKGROUND_COLOR[0] + ", " + BACKGROUND_COLOR[1] + ", " + BACKGROUND_COLOR[2] + ")";
+    if (STORAGE) {
+      localStorage.background_color_red = BACKGROUND_COLOR[0];
+      localStorage.background_color_green = BACKGROUND_COLOR[1];
+      localStorage.background_color_blue = BACKGROUND_COLOR[2];
+      localStorage.bgimage = document.body.style.backgroundImage;//added 05/03/17 MEDavy
+      saveToLocalStorage();//save the file
+    }
+  }//end if there is no background image
+  menu.selector.selectedIndex = 0;//reset brush type
+  onMenuSelectorChange();//reset brush type	
 }
 
 function onMenuFile() {//added 05/02/17 MEDavy
