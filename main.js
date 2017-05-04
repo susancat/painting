@@ -782,11 +782,11 @@ Menu.prototype = {
     selector: null,
     save: null,
     clear: null,
-		pointerSize: null,//added 05/01/17 MEDavy
-		resetButton: null,//added 05/01/17 MEDavy
-		files: null,//added 05/01/17 MEDavy
-		fileButton: null,//added 05/02/17 MEDavy
-		Dialog: null,//added 05/01/17 MEDavy
+    pointerSize: null,//added 05/01/17 MEDavy
+    resetButton: null,//added 05/01/17 MEDavy
+    files: null,//added 05/01/17 MEDavy
+    fileButton: null,//added 05/02/17 MEDavy
+    Dialog: null,//added 05/01/17 MEDavy
     about: null,
     init: function() {
         var b, c, d, e = 17,
@@ -800,7 +800,7 @@ Menu.prototype = {
         this.foregroundColor.style.cursor = "pointer";
         this.foregroundColor.width = e;
         this.foregroundColor.height = a;
-				this.foregroundColor.title = "Change Foreground Color (or press 'shift')";//added 05/01/17 MEDavy
+        this.foregroundColor.title = "Change Foreground Color (or press 'shift')";//added 05/01/17 MEDavy
         this.container.appendChild(this.foregroundColor);
         this.setForegroundColor(COLOR);
         c = document.createTextNode(" ");
@@ -823,6 +823,8 @@ Menu.prototype = {
         this.fileButton.title = "Load image as background (or press 'o)";
         if (IOS){//if the browser is ios the button won't work so hide it
           this.fileButton.style = "display:none;";
+          this.fileButton.style.visibility = "hidden";
+          this.fileButton.style.display = "none";
 	}
         this.container.appendChild(this.fileButton);
         
@@ -831,6 +833,8 @@ Menu.prototype = {
         this.files.id = "files";
 	if (!IOS){//if the browser is ios the button won't work so show the picker
           this.files.style = "display:none;";
+	  this.files.style.visibility = "hidden";
+          this.files.style.display = "none";
 	}
         this.files.title = "Load image as background(or press 'o)";
         this.container.appendChild(this.files);
