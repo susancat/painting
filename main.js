@@ -1405,7 +1405,7 @@ function flatten() {
   a.fillStyle = "rgb(" + BACKGROUND_COLOR[0] + ", " + BACKGROUND_COLOR[1] + ", " + BACKGROUND_COLOR[2] + ")";
   a.fillRect(0, 0, canvas.width, canvas.height);
   //begin add 05/03/17 MEDavy
-  a.drawImage(img, 0, 0);
+  a.drawImage(img, 0, 0, SCREEN_WIDTH, (SCREEN_WIDTH*img.height)/img.width);
   a.drawImage(canvas, 0, 0);
   //end add
 }
