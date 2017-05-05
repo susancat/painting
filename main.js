@@ -1056,9 +1056,6 @@ function init() {
         }
         document.body.style.backgroundImage = localStorage.bgimage;//added 05/03/17 MEDavy
     }
-    if (IOS) {
-      document.body.style.backgroundSize = "";//prevent draw error on ios 05/05/17 MEDavy
-    }
     foregroundColorSelector.setColor(COLOR);
 		if (!document.body.style.backgroundImage) {
 			backgroundColorSelector.setColor(BACKGROUND_COLOR);
@@ -1426,21 +1423,16 @@ function saveToLocalStorage() {
 }
 
 function flatten() {
-  //begin add 05/03/17 MEDavy
-  var img = new Image;
-  img.src = document.body.style.backgroundImage.replace('url("', '').replace('")', '');
-  //end add
   var a = flattenCanvas.getContext("2d");
   a.fillStyle = "rgb(" + BACKGROUND_COLOR[0] + ", " + BACKGROUND_COLOR[1] + ", " + BACKGROUND_COLOR[2] + ")";
   a.fillRect(0, 0, canvas.width, canvas.height);
   //begin add 05/03/17 MEDavy
-  if (IOS) {
-     a.drawImage(img, 0, 0);//draw background image
-  }
-  if (!IOS) {
+  var img = new Image;
+  img.src = document.body.style.backgroundImage.replace('url("', '').replace('")', '');
+  img.onload = function(){
     a.drawImage(img, 0, 0, SCREEN_WIDTH, (SCREEN_WIDTH*img.height)/img.width);//draw resized background image
-  }
-  a.drawImage(canvas, 0, 0);
+    a.drawImage(canvas, 0, 0);
+  };
   //end add
 }
 
