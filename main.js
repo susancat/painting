@@ -1054,7 +1054,10 @@ function init() {
             BACKGROUND_COLOR[1] = localStorage.background_color_green;
             BACKGROUND_COLOR[2] = localStorage.background_color_blue
         }
-				document.body.style.backgroundImage = localStorage.bgimage;//added 05/03/17 MEDavy
+        document.body.style.backgroundImage = localStorage.bgimage;//added 05/03/17 MEDavy
+    }
+    if (IOS) {
+      document.body.style.backgroundSize = "";//prevent draw error on ios 05/05/17 MEDavy
     }
     foregroundColorSelector.setColor(COLOR);
 		if (!document.body.style.backgroundImage) {
@@ -1243,7 +1246,7 @@ function onMenuSelectorChange() {
     }
     brush.destroy();
     brush = eval("new " + BRUSHES[menu.selector.selectedIndex] + "(context)");
-    window.location.hash = BRUSHES[menu.selector.selectedIndex]
+    window.location.hash = BRUSHES[menu.selector.selectedIndex];
 		menu.selector.blur(); //lose focus so more keypress events can be accepted - MEDavy 05/01/17
 }
 
@@ -1275,6 +1278,7 @@ function onMenuClear() {
     saveToLocalStorage();
     brush.destroy();
     brush = eval("new " + BRUSHES[menu.selector.selectedIndex] + "(context)")
+    onMenuSelectorChange();//hopefully will fix ios bug 05/05/17 MEDavy
 }
 
 function onMenuAbout() {
@@ -1430,7 +1434,12 @@ function flatten() {
   a.fillStyle = "rgb(" + BACKGROUND_COLOR[0] + ", " + BACKGROUND_COLOR[1] + ", " + BACKGROUND_COLOR[2] + ")";
   a.fillRect(0, 0, canvas.width, canvas.height);
   //begin add 05/03/17 MEDavy
-  a.drawImage(img, 0, 0, SCREEN_WIDTH, (SCREEN_WIDTH*img.height)/img.width);
+  if (IOS) {
+     a.drawImage(img, 0, 0);//draw background image
+  }
+  if (!IOS) {
+    a.drawImage(img, 0, 0, SCREEN_WIDTH, (SCREEN_WIDTH*img.height)/img.width);//draw resized background image
+  }
   a.drawImage(canvas, 0, 0);
   //end add
 }
