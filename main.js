@@ -1256,9 +1256,7 @@ function onMenuMouseOut() {
 }
 
 function onMenuSave() {
-    flatten();
-    window.open(flattenCanvas.toDataURL("image/png"), "mywindow");
-		saveToLocalStorage();
+    flatten(true);
 }
 
 function onMenuClear() {
@@ -1273,8 +1271,7 @@ function onMenuClear() {
 		flattenCanvas.height = SCREEN_HEIGHT;
     context.clearRect(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
     saveToLocalStorage();
-    brush.destroy();
-    brush = eval("new " + BRUSHES[menu.selector.selectedIndex] + "(context)")
+    menu.selector.selectedIndex = 0;//reset brush type
     onMenuSelectorChange();//hopefully will fix ios bug 05/05/17 MEDavy
 }
 
@@ -1422,17 +1419,23 @@ function saveToLocalStorage() {
 	localStorage.bgimage = document.body.style.backgroundImage;//added 05/03/17 MEDavy
 }
 
-function flatten() {
+function flatten(saveAfter) {
   var a = flattenCanvas.getContext("2d");
   a.fillStyle = "rgb(" + BACKGROUND_COLOR[0] + ", " + BACKGROUND_COLOR[1] + ", " + BACKGROUND_COLOR[2] + ")";
   a.fillRect(0, 0, canvas.width, canvas.height);
   //begin add 05/03/17 MEDavy
   var img = new Image;
   img.src = document.body.style.backgroundImage.replace('url("', '').replace('")', '');
-  img.onload = function(){
-    a.drawImage(img, 0, 0, SCREEN_WIDTH, (SCREEN_WIDTH*img.height)/img.width);//draw resized background image
-    a.drawImage(canvas, 0, 0);
-  };
+  if (saveAfter == true) {
+    img.onload = function(){
+      a.drawImage(img, 0, 0, SCREEN_WIDTH, (SCREEN_WIDTH*img.height)/img.width);//draw resized background image
+      a.drawImage(canvas, 0, 0);
+      window.open(flattenCanvas.toDataURL("image/png"), "mywindow");
+      saveToLocalStorage();
+    };
+  }else{
+    a.drawImage(canvas, 0, 0);//if we aren't opening a window afterwards just draw the canvas
+  }
   //end add
 }
 
