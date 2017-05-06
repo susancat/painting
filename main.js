@@ -1143,21 +1143,28 @@ function onWindowKeyDown(a) {
           BRUSH_SIZE=1;//reset brush size
           document.getElementById("pointerSize").innerHTML = BRUSH_SIZE+"px";//added 05/01/17 MEDavy
           break
-				case 8://delete key pressed - added by MEDavy 05/01/17
-				    onMenuClear();//promt the user to clear canvas
-				    break
-				case 82://r key pressed: reset pointer color - added by MEDavy 05/01/17
-						onMenuReset();
-				    break
-				case 27://esc key pressed: reset pointer color - added by MEDavy 05/01/17
-						cleanPopUps();
-				    break
-				case 79://o key pressed: load background image- added by MEDavy 05/01/17
-						onMenuFile();
-				    break
-				case 83://s key pressed: save image- added by MEDavy 05/01/17
-						onMenuSave();
-				    break
+        case 8://delete key pressed - added by MEDavy 05/01/17
+          onMenuClear();//promt the user to clear canvas
+          break
+        case 82://r key pressed: reset pointer color - added by MEDavy 05/01/17
+          onMenuReset();
+          break
+        case 27://esc key pressed: reset pointer color - added by MEDavy 05/01/17
+          cleanPopUps();
+          break
+        case 79://o key pressed: load background image- added by MEDavy 05/01/17
+          onMenuFile();
+          break
+        case 83://s key pressed: save image- added by MEDavy 05/01/17
+	  onMenuSave();
+          break
+        case 9://tab key press: move menu - 05/06/17 MEDavy
+	  if (menu.container.style.top == "0px") {
+            menu.container.style.top == "30px";
+	  }else{
+            menu.container.style.top = "0px";
+	  }
+          break
     }
 }
 
