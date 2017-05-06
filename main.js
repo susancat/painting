@@ -1160,7 +1160,7 @@ function onWindowKeyDown(a) {
           break
         case 9://tab key press: move menu - 05/06/17 MEDavy
 	  if (menu.container.style.top == "0px") {
-            menu.container.style.top == "30px";
+            menu.container.style.top == "40px";
 	  }else{
             menu.container.style.top = "0px";
 	  }
