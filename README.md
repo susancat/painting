@@ -23,5 +23,8 @@ Procedural drawing app derived from [Harmony](http://mrdoob.com/projects/harmony
 * **Lose selector focus after selecting brush (so keyboard shortcuts can be accepted)**
 * **About menu shrinks to fit window height**
 * **Minor styling changes (black borders, rounded corners, grey buttons)**
-* **Fixed double events in iOS**
+* **Compatability in iOS**
+* * Fixed double events
+* * Different image picker
+* * Buttons for brush size
 * **Fit canvas to window on clear**
