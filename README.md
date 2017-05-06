@@ -1,5 +1,5 @@
 # SKETCHY
-Procedural drawing app derived from Harmony
+Procedural drawing app derived from [Harmony](http://mrdoob.com/projects/harmony/)
 
 ## Changes made:
 * **Upload image as background**
