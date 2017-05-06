@@ -1256,7 +1256,9 @@ function onMenuMouseOut() {
 }
 
 function onMenuSave() {
-    flatten(true);
+  flatten();
+  window.open(flattenCanvas.toDataURL("image/png"), "mywindow");
+  saveToLocalStorage();
 }
 
 function onMenuClear() {
@@ -1419,23 +1421,15 @@ function saveToLocalStorage() {
 	localStorage.bgimage = document.body.style.backgroundImage;//added 05/03/17 MEDavy
 }
 
-function flatten(saveAfter) {
+function flatten() {
+  var img = new Image;
+  img.src = document.body.style.backgroundImage.replace('url("', '').replace('")', '');
   var a = flattenCanvas.getContext("2d");
   a.fillStyle = "rgb(" + BACKGROUND_COLOR[0] + ", " + BACKGROUND_COLOR[1] + ", " + BACKGROUND_COLOR[2] + ")";
   a.fillRect(0, 0, canvas.width, canvas.height);
   //begin add 05/03/17 MEDavy
-  var img = new Image;
-  img.src = document.body.style.backgroundImage.replace('url("', '').replace('")', '');
-  if (saveAfter == true) {
-    img.onload = function(){
-      a.drawImage(img, 0, 0, SCREEN_WIDTH, (SCREEN_WIDTH*img.height)/img.width);//draw resized background image
-      a.drawImage(canvas, 0, 0);
-      window.open(flattenCanvas.toDataURL("image/png"), "mywindow");
-      saveToLocalStorage();
-    };
-  }else{
-    a.drawImage(canvas, 0, 0);//if we aren't opening a window afterwards just draw the canvas
-  }
+  a.drawImage(img, 0, 0, SCREEN_WIDTH, (SCREEN_WIDTH*img.height)/img.width);//draw resized background image
+  a.drawImage(canvas, 0, 0);
   //end add
 }
 
