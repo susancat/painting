@@ -1079,7 +1079,7 @@ function init() {
     container.appendChild(about.container);
     window.addEventListener("mousemove", onWindowMouseMove, false);
     window.addEventListener("resize", onWindowResize, false);
-    window.addEventListener("keydown", onWindowKeyDown, false);
+    window.addEventListener("keydown", function(event){event.preventDefault();onWindowKeyDown(event);});, false);
     window.addEventListener("keyup", onWindowKeyUp, false);
     window.addEventListener("blur", onWindowBlur, false);
     document.addEventListener("mousedown", onDocumentMouseDown, false);
