@@ -793,6 +793,7 @@ Menu.prototype = {
             a = 17;
         this.container = document.createElement("div");
         this.container.className = "gui";
+        this.container.id = "Menu";
         this.container.style.position = "absolute";
         this.container.style.top = "0px";
         this.foregroundColor = document.createElement("canvas");
@@ -918,6 +919,7 @@ About.prototype = {
         var b, a;
         this.container = document.createElement("div");
         this.container.className = "gui";
+        this.container.id = "About";
         this.container.style.position = "absolute";
         this.container.style.top = "0px";
         this.container.style.visibility = "hidden";
@@ -1096,8 +1098,9 @@ function onWindowResize() {
     SCREEN_WIDTH = window.innerWidth;
     SCREEN_HEIGHT = window.innerHeight;
     menu.container.style.left = ((SCREEN_WIDTH - menu.container.offsetWidth) / 2) + "px";
+    menu.container.style.maxHeight = SCREEN_HEIGHT;
     about.container.style.left = ((SCREEN_WIDTH - about.container.offsetWidth) / 2) + "px";
-    about.container.style.top = ((SCREEN_HEIGHT - about.container.offsetHeight) / 2) + "px"
+    about.container.style.top = ((SCREEN_HEIGHT - about.container.offsetHeight) / 2) + "px";
 }
 
 function increaseBrush() {//added 05/01/17 MEDavy
