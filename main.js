@@ -1098,7 +1098,7 @@ function onWindowResize() {
     SCREEN_WIDTH = window.innerWidth;
     SCREEN_HEIGHT = window.innerHeight;
     menu.container.style.left = ((SCREEN_WIDTH - menu.container.offsetWidth) / 2) + "px";
-    about.container.style.maxHeight = SCREEN_HEIGHT;
+    about.container.style.maxHeight = SCREEN_HEIGHT-20+"px";
     about.container.style.left = ((SCREEN_WIDTH - about.container.offsetWidth) / 2) + "px";
     about.container.style.top = ((SCREEN_HEIGHT - about.container.offsetHeight) / 2) + "px";
 }
