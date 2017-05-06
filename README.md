@@ -6,13 +6,14 @@ Procedural drawing app derived from [Harmony](http://mrdoob.com/projects/harmony
 * * Background image appears in saved image in Chrome
 * * Background image saved to localStorage
 * **Changed/added keyboard shortcuts**
-* * Increase brush size changed to up arrow
-* * Reduce brush size changed to down arrow
-* * Upload background added as 'o'
-* * Reset brush added as 'r'
-* * Clear canvas added as 'delete'
-* * Close popup added as 'escape'
-* * Save image added as 's'
+* * Increase brush size using 'UP' (was l)
+* * Reduce brush size using 'DOWN' (was d)
+* * Upload background using 'O'
+* * Reset brush using 'R'
+* * Clear canvas using 'DELETE'
+* * Close popup using 'ESC'
+* * Save image using 'S'
+* * Move menu out of the way using 'TAB'
 * **Documentation added**
 * * Keyboard shortcuts
 * * Preview brush appearance
