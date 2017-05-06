@@ -930,13 +930,13 @@ About.prototype = {
         b.innerHTML = '<strong>SKETCHY</strong> Version ' + REV + ' by <a href="https://github.com/MEDavy" target="_blank">MEDavy</a></br>an improved version of <strong>HARMONY</strong> by <a href="http://twitter.com/mrdoob" target="_blank">Mr.doob</a>';//added 05/01/17 MEDavy
         a.appendChild(b);
 				
-				b = document.createElement("hr");//edited 05/01/17 MEDavy
+        b = document.createElement("hr");//edited 05/01/17 MEDavy
         a.appendChild(b);//edited 05/01/17 MEDavy
         b = document.createElement("p");
         b.style.textAlign = "center";
-        b.innerHTML = 'Shortcuts: </br><span class="key" onclick="increaseBrush();">UP</span>: increase brush size</br><span class="key" onclick="decreaseBrush();">DOWN</span>: decrease brush size</br><span class="key">LEFT</span> default brush size<br /><span class="key">SHIFT</span>: open color picker<br /><span class="key">R</span>: reset brush<br /><span class="key">O</span>: upload background image<br /><span class="key">DELETE</span>: clear canvas<br /><span class="key">ESC</span>: close about window/color selector<br /><br/><a onclick="writeBackgroundData();" style="cursor:pointer;"><u>Brush Examples</u></a>';//changed to reflect code additions/changes - 05/01/17 MEDavy
+        b.innerHTML = 'Shortcuts: </br><span class="key" onclick="increaseBrush();">UP</span>: increase brush size</br><span class="key" onclick="decreaseBrush();">DOWN</span>: decrease brush size</br><span class="key">LEFT</span> default brush size<br /><span class="key">SHIFT</span>: open color picker<br /><span class="key">R</span>: reset brush<br /><span class="key">O</span>: upload background image<br /><span class="key">DELETE</span>: clear canvas<br /><span class="key">ESC</span>: close about window/color selector<br /><span class="key">ALT+CLICK</span>: set brush color from image<br /><br/><a onclick="writeBackgroundData();" style="cursor:pointer;"><u>Brush Examples</u></a>';//changed to reflect code additions/changes - 05/01/17 MEDavy
         a.appendChild(b);
-				b = document.createElement("hr");//edited 05/01/17 MEDavy
+        b = document.createElement("hr");//edited 05/01/17 MEDavy
         a.appendChild(b);//edited 05/01/17 MEDavy
         b = document.createElement("p");
         b.style.textAlign = "center";
