@@ -1,0 +1,6 @@
+CACHE MANIFEST
+#v1
+# -------------------component pages-------------------
+/index.html
+# -------------------resources-------------------
+/main.js
