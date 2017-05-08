@@ -5,3 +5,6 @@ CACHE:
 index.html
 # -------------------resources-------------------
 main.js
+
+NETWORK:
+*
