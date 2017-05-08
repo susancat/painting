@@ -1,5 +1,4 @@
 CACHE MANIFEST
-#v1
-CACHE:
-/index.html
-/main.js
+
+index.html
+main.js
