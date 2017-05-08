@@ -1254,7 +1254,7 @@ function onMenuSelectorChange() {
     brush.destroy();
     brush = eval("new " + BRUSHES[menu.selector.selectedIndex] + "(context)");
     window.location.hash = BRUSHES[menu.selector.selectedIndex];
-		menu.selector.blur(); //lose focus so more keypress events can be accepted - MEDavy 05/01/17
+    menu.selector.blur(); //lose focus so more keypress events can be accepted - MEDavy 05/01/17
 }
 
 function onMenuMouseOver() {
@@ -1275,16 +1275,19 @@ function onMenuClear() {
     if (!confirm("Discard your drawing?\n(If you have uploaded a background image it will stay)")) {
         return
     }
-		SCREEN_WIDTH = window.innerWidth;
+    SCREEN_WIDTH = window.innerWidth;
     SCREEN_HEIGHT = window.innerHeight;
-		canvas.width = SCREEN_WIDTH;
+    canvas.width = SCREEN_WIDTH;
     canvas.height = SCREEN_HEIGHT;
-		flattenCanvas.width = SCREEN_WIDTH;
-		flattenCanvas.height = SCREEN_HEIGHT;
+    flattenCanvas.width = SCREEN_WIDTH;
+    flattenCanvas.height = SCREEN_HEIGHT;
     context.clearRect(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
     saveToLocalStorage();
     menu.selector.selectedIndex = 0;//reset brush type
     onMenuSelectorChange();//hopefully will fix ios bug 05/05/17 MEDavy
+    if (IOS) {
+      onMenuReset(true);
+    }
 }
 
 function onMenuAbout() {
@@ -1303,9 +1306,11 @@ function onMenuPointerSize() {//added 05/01/17 MEDavy
   }  
 }
 
-function onMenuReset() {//added 05/01/17 MEDavy
-  if (!confirm("Reset the brush?")) {
-    return
+function onMenuReset(alert) {//added 05/01/17 MEDavy
+  if (!alert == true) {
+    if (!confirm("Reset the brush?")) {
+      return
+    } 
   }
   COLOR[0] = 0;
   COLOR[1] = 0;
