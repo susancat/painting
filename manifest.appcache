@@ -5,6 +5,7 @@ CACHE:
 index.html
 # -------------------resources-------------------
 main.js
+https://www.paypal.com/en_GB/i/btn/btn_donate_SM.gif
 
 NETWORK:
 *
