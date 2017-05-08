@@ -1307,7 +1307,7 @@ function onMenuPointerSize() {//added 05/01/17 MEDavy
 }
 
 function onMenuReset(alert) {//added 05/01/17 MEDavy
-  if (!alert == true) {
+  if (!(alert == true)) {
     if (!confirm("Reset the brush?")) {
       return
     } 
