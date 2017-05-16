@@ -70,16 +70,23 @@ chrome.prototype = {
         var e, b, a, g;
         this.points.push([f, c]);
         this.context.lineWidth = BRUSH_SIZE;
-        this.context.strokeStyle = "rgba(" + COLOR[0] + ", " + COLOR[1] + ", " + COLOR[2] + ", " + 0.1 * BRUSH_PRESSURE + ")";
+				if (BRUSH_SIZE > 3) {//added 05/15/17 MEDavy
+					this.context.strokeStyle = "rgb(" + COLOR[0] + ", " + COLOR[1] + ", " + COLOR[2] + ")";
+				} else {
+					this.context.strokeStyle = "rgba(" + COLOR[0] + ", " + COLOR[1] + ", " + COLOR[2] + ", " + 0.1 * BRUSH_PRESSURE + ")";
+				}
         this.context.beginPath();
         this.context.moveTo(this.prevMouseX, this.prevMouseY);
         this.context.lineTo(f, c);
         this.context.stroke();
+				this.context.strokeStyle = "rgba(" + COLOR[0] + ", " + COLOR[1] + ", " + COLOR[2] + ", " + 0.1 * BRUSH_PRESSURE + ")";
+				this.context.lineWidth = 1;
         for (e = 0; e < this.points.length; e++) {
             b = this.points[e][0] - this.points[this.count][0];
             a = this.points[e][1] - this.points[this.count][1];
             g = b * b + a * a;
             if (g < 1000) {
+							  this.context.lineWidth = 1;
                 this.context.strokeStyle = "rgba(" + Math.floor(Math.random() * COLOR[0]) + ", " + Math.floor(Math.random() * COLOR[1]) + ", " + Math.floor(Math.random() * COLOR[2]) + ", " + 0.1 * BRUSH_PRESSURE + " )";
                 this.context.beginPath();
                 this.context.moveTo(this.points[this.count][0] + (b * 0.2), this.points[this.count][1] + (a * 0.2));
@@ -117,11 +124,16 @@ fur.prototype = {
         var e, b, a, g;
         this.points.push([f, c]);
         this.context.lineWidth = BRUSH_SIZE;
-        this.context.strokeStyle = "rgba(" + COLOR[0] + ", " + COLOR[1] + ", " + COLOR[2] + ", " + 0.1 * BRUSH_PRESSURE + ")";
+				if (BRUSH_SIZE > 3) {//added 05/15/17 MEDavy
+					this.context.strokeStyle = "rgb(" + COLOR[0] + ", " + COLOR[1] + ", " + COLOR[2] + ")";
+				} else {
+					this.context.strokeStyle = "rgba(" + COLOR[0] + ", " + COLOR[1] + ", " + COLOR[2] + ", " + 0.1 * BRUSH_PRESSURE + ")";
+				}
         this.context.beginPath();
         this.context.moveTo(this.prevMouseX, this.prevMouseY);
         this.context.lineTo(f, c);
         this.context.stroke();
+				this.context.strokeStyle = "rgba(" + COLOR[0] + ", " + COLOR[1] + ", " + COLOR[2] + ", " + 0.1 * BRUSH_PRESSURE + ")";
         for (e = 0; e < this.points.length; e++) {
             b = this.points[e][0] - this.points[this.count][0];
             a = this.points[e][1] - this.points[this.count][1];
@@ -190,7 +202,8 @@ longfur.prototype = {
         var f, e, b, a, h;
         this.points.push([g, c]);
         this.context.lineWidth = BRUSH_SIZE;
-        this.context.strokeStyle = "rgba(" + COLOR[0] + ", " + COLOR[1] + ", " + COLOR[2] + ", " + 0.05 * BRUSH_PRESSURE + ")";
+			  this.context.strokeStyle = "rgba(" + COLOR[0] + ", " + COLOR[1] + ", " + COLOR[2] + ", " + 0.1 * BRUSH_PRESSURE + ")";
+				
         for (f = 0; f < this.points.length; f++) {
             e = -Math.random();
             b = this.points[f][0] - this.points[this.count][0];
@@ -239,7 +252,7 @@ ribbon.prototype = {
         function d() {
             var e;
             this.context.lineWidth = BRUSH_SIZE;
-            this.context.strokeStyle = "rgba(" + COLOR[0] + ", " + COLOR[1] + ", " + COLOR[2] + ", " + 0.05 * BRUSH_PRESSURE + ")";
+					  this.context.strokeStyle = "rgba(" + COLOR[0] + ", " + COLOR[1] + ", " + COLOR[2] + ", " + 0.1 * BRUSH_PRESSURE + ")";
             for (e = 0; e < c.painters.length; e++) {
                 c.context.beginPath();
                 c.context.moveTo(c.painters[e].dx, c.painters[e].dy);
@@ -290,15 +303,25 @@ shaded.prototype = {
         this.prevMouseY = a
     },
     stroke: function(f, c) {
+        this.context.lineWidth = BRUSH_SIZE;
+				if (BRUSH_SIZE > 3) {//added 05/15/17 MEDavy
+					this.context.strokeStyle = "rgb(" + COLOR[0] + ", " + COLOR[1] + ", " + COLOR[2] + ")";
+				} else {
+					this.context.strokeStyle = "rgba(" + COLOR[0] + ", " + COLOR[1] + ", " + COLOR[2] + ", " + ((1 - (g / 1000)) * 0.1 * BRUSH_PRESSURE) + " )";
+				}
+				this.context.beginPath();
+        this.context.moveTo(this.prevMouseX, this.prevMouseY);
+        this.context.lineTo(f, c);
+        this.context.stroke();
         var e, b, a, g;
         this.points.push([f, c]);
-        this.context.lineWidth = BRUSH_SIZE;
         for (e = 0; e < this.points.length; e++) {
             b = this.points[e][0] - this.points[this.count][0];
             a = this.points[e][1] - this.points[this.count][1];
             g = b * b + a * a;
             if (g < 1000) {
-                this.context.strokeStyle = "rgba(" + COLOR[0] + ", " + COLOR[1] + ", " + COLOR[2] + ", " + ((1 - (g / 1000)) * 0.1 * BRUSH_PRESSURE) + " )";
+							  this.context.strokeStyle = "rgba(" + COLOR[0] + ", " + COLOR[1] + ", " + COLOR[2] + ", " + ((1 - (g / 1000)) * 0.1 * BRUSH_PRESSURE) + " )";
+								this.context.lineWidth = 1;
                 this.context.beginPath();
                 this.context.moveTo(this.points[this.count][0], this.points[this.count][1]);
                 this.context.lineTo(this.points[e][0], this.points[e][1]);
@@ -330,11 +353,20 @@ simple.prototype = {
     },
     stroke: function(b, a) {
         this.context.lineWidth = BRUSH_SIZE;
-        this.context.strokeStyle = "rgba(" + COLOR[0] + ", " + COLOR[1] + ", " + COLOR[2] + ", " + 0.5 * BRUSH_PRESSURE + ")";
+				if (BRUSH_SIZE > 3) {//added 05/15/17 MEDavy
+					this.context.strokeStyle = "rgb(" + COLOR[0] + ", " + COLOR[1] + ", " + COLOR[2] + ")";
+					this.context.fillStyle = "rgb(" + COLOR[0] + ", " + COLOR[1] + ", " + COLOR[2] + ")";
+				} else {
+					this.context.strokeStyle = "rgba(" + COLOR[0] + ", " + COLOR[1] + ", " + COLOR[2] + ", " + 0.5 * BRUSH_PRESSURE + ")";
+					this.context.fillStyle = "rgba(0,0,0,0)";
+				}
         this.context.beginPath();
         this.context.moveTo(this.prevMouseX, this.prevMouseY);
         this.context.lineTo(b, a);
         this.context.stroke();
+				this.context.beginPath();
+				this.context.arc(b, a, BRUSH_SIZE/2, 0, 2 * Math.PI);
+				this.context.fill();
         this.prevMouseX = b;
         this.prevMouseY = a
     },
@@ -365,11 +397,17 @@ sketchy.prototype = {
         var e, b, a, g;
         this.points.push([f, c]);
         this.context.lineWidth = BRUSH_SIZE;
-        this.context.strokeStyle = "rgba(" + COLOR[0] + ", " + COLOR[1] + ", " + COLOR[2] + ", " + 0.05 * BRUSH_PRESSURE + ")";
+				if (BRUSH_SIZE > 3) {//added 05/15/17 MEDavy
+					this.context.strokeStyle = "rgb(" + COLOR[0] + ", " + COLOR[1] + ", " + COLOR[2] + ")";
+				} else {
+					this.context.strokeStyle = "rgba(" + COLOR[0] + ", " + COLOR[1] + ", " + COLOR[2] + ", " + 0.1 * BRUSH_PRESSURE + ")";
+				}
         this.context.beginPath();
         this.context.moveTo(this.prevMouseX, this.prevMouseY);
         this.context.lineTo(f, c);
         this.context.stroke();
+				this.context.lineWidth = 1;
+				this.context.strokeStyle = "rgba(" + COLOR[0] + ", " + COLOR[1] + ", " + COLOR[2] + ", " + 0.1 * BRUSH_PRESSURE + ")";
         for (e = 0; e < this.points.length; e++) {
             b = this.points[e][0] - this.points[this.count][0];
             a = this.points[e][1] - this.points[this.count][1];
@@ -452,12 +490,17 @@ web.prototype = {
         var e, b, a, g;
         this.points.push([f, c]);
         this.context.lineWidth = BRUSH_SIZE;
-        this.context.strokeStyle = "rgba(" + COLOR[0] + ", " + COLOR[1] + ", " + COLOR[2] + ", " + 0.5 * BRUSH_PRESSURE + ")";
+				if (BRUSH_SIZE > 3) {//added 05/15/17 MEDavy
+					this.context.strokeStyle = "rgb(" + COLOR[0] + ", " + COLOR[1] + ", " + COLOR[2] + ")";
+				} else {
+					this.context.strokeStyle = "rgba(" + COLOR[0] + ", " + COLOR[1] + ", " + COLOR[2] + ", " + 0.5 * BRUSH_PRESSURE + ")";
+				}
         this.context.beginPath();
         this.context.moveTo(this.prevMouseX, this.prevMouseY);
         this.context.lineTo(f, c);
         this.context.stroke();
-        this.context.strokeStyle = "rgba(" + COLOR[0] + ", " + COLOR[1] + ", " + COLOR[2] + ", " + 0.1 * BRUSH_PRESSURE + ")";
+			  this.context.strokeStyle = "rgba(" + COLOR[0] + ", " + COLOR[1] + ", " + COLOR[2] + ", " + 0.1 * BRUSH_PRESSURE + ")";//added 05/15/17 MEDavy
+				this.context.lineWidth = 1;
         for (e = 0; e < this.points.length; e++) {
             b = this.points[e][0] - this.points[this.count][0];
             a = this.points[e][1] - this.points[this.count][1];
@@ -826,17 +869,16 @@ Menu.prototype = {
           this.fileButton.style = "display:none;";
           this.fileButton.style.visibility = "hidden";
           this.fileButton.style.display = "none";
-	}
+				}
         this.container.appendChild(this.fileButton);
-        
         this.files = document.createElement("input");
         this.files.type = "file";
         this.files.id = "files";
-	if (!IOS){//if the browser is ios the button won't work so show the picker
+				if (!IOS){//if the browser is ios the button won't work so show the picker
           this.files.style = "display:none;";
-	  this.files.style.visibility = "hidden";
+					this.files.style.visibility = "hidden";
           this.files.style.display = "none";
-	}
+				}
         this.files.title = "Load image as background(or press 'o)";
         this.container.appendChild(this.files);
         c = document.createTextNode(" ");
@@ -852,11 +894,18 @@ Menu.prototype = {
         this.container.appendChild(c);
         //end add
         this.selector = document.createElement("select");
+				
         for (i = 0; i < BRUSHES.length; i++) {
-            b = document.createElement("option");
-            b.id = i;
-            b.innerHTML = BRUSHES[i].toUpperCase();
-            this.selector.appendChild(b)
+					b = document.createElement("option");
+					b.id = i;
+					b.innerHTML = BRUSHES[i].toUpperCase();
+					if (!BRUSHES[i]){
+						b.disabled = true;
+					}
+					if (IOS && BRUSHES[i].toUpperCase() == "GRID") {
+						b.disabled = true;
+					}
+					this.selector.appendChild(b)
         }
         this.selector.title = "Change Brush Styles";//added 05/01/17 MEDavy
         this.container.appendChild(this.selector);
@@ -936,7 +985,7 @@ About.prototype = {
         a.appendChild(b);//edited 05/01/17 MEDavy
         b = document.createElement("p");
         b.style.textAlign = "center";
-        b.innerHTML = 'Shortcuts: </br><span class="key" onclick="increaseBrush();">UP</span>: increase brush size</br><span class="key" onclick="decreaseBrush();">DOWN</span>: decrease brush size</br><span class="key">LEFT</span> default brush size<br /><span class="key">SHIFT</span>: open color picker<br /><span class="key">TAB</span>: move menu out of the way<br /><span class="key">R</span>: reset brush<br /><span class="key">O</span>: upload background image<br /><span class="key">DELETE</span>: clear canvas<br /><span class="key">ESC</span>: close about window/color selector<br /><span class="key">ALT+CLICK</span>: set brush color from image<br /><br/><a onclick="writeBackgroundData();" style="cursor:pointer;"><u>Brush Examples</u></a>';//changed to reflect code additions/changes - 05/01/17 MEDavy
+        b.innerHTML = 'Shortcuts: </br><span class="key" onclick="increaseBrush();">UP</span>: increase brush size</br><span class="key" onclick="decreaseBrush();">DOWN</span>: decrease brush size</br><span class="key">LEFT</span> default brush size<br /><span class="key">SHIFT</span>: open color picker<br /><span class="key" onclick="moveMenu();">TAB</span>: move menu out of the way<br /><span class="key">R</span>: reset brush<br /><span class="key">O</span>: upload background image<br /><span class="key">DELETE</span>: clear canvas<br /><span class="key">ESC</span>: close about window/color selector<br /><span class="key">ALT+CLICK</span>: set brush color from image<br /><br/><a onclick="writeBackgroundData();" style="cursor:pointer;"><u>Brush Examples</u></a>';//changed to reflect code additions/changes - 05/01/17 MEDavy
         a.appendChild(b);
         b = document.createElement("hr");//edited 05/01/17 MEDavy
         a.appendChild(b);//edited 05/01/17 MEDavy
@@ -1156,16 +1205,20 @@ function onWindowKeyDown(a) {
           onMenuFile();
           break
         case 83://s key pressed: save image- added by MEDavy 05/01/17
-	  onMenuSave();
+	        onMenuSave();
           break
         case 9://tab key press: move menu - 05/06/17 MEDavy
-	  if (menu.container.style.top == "0px") {
+	        moveMenu();
+          break
+    }
+}
+
+function moveMenu() {
+	if (menu.container.style.top == "0px") {
             menu.container.style.top = "40px";
 	  }else{
             menu.container.style.top = "0px";
 	  }
-          break
-    }
 }
 
 function onWindowKeyUp(event) {
