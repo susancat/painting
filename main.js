@@ -70,23 +70,22 @@ chrome.prototype = {
         var e, b, a, g;
         this.points.push([f, c]);
         this.context.lineWidth = BRUSH_SIZE;
-				if (BRUSH_SIZE > 3) {//added 05/15/17 MEDavy
-					this.context.strokeStyle = "rgb(" + COLOR[0] + ", " + COLOR[1] + ", " + COLOR[2] + ")";
-				} else {
-					this.context.strokeStyle = "rgba(" + COLOR[0] + ", " + COLOR[1] + ", " + COLOR[2] + ", " + 0.1 * BRUSH_PRESSURE + ")";
-				}
+				//added 05/16/17 MEDavy
+				this.context.lineCap = "round";
+				//end add
+				this.context.strokeStyle = "rgba(" + COLOR[0] + ", " + COLOR[1] + ", " + COLOR[2] + ", " + 0.1 * BRUSH_PRESSURE + ")";
         this.context.beginPath();
         this.context.moveTo(this.prevMouseX, this.prevMouseY);
         this.context.lineTo(f, c);
         this.context.stroke();
-				this.context.strokeStyle = "rgba(" + COLOR[0] + ", " + COLOR[1] + ", " + COLOR[2] + ", " + 0.1 * BRUSH_PRESSURE + ")";
+				//added 05/16/17 MEDavy
 				this.context.lineWidth = 1;
+				//end add
         for (e = 0; e < this.points.length; e++) {
             b = this.points[e][0] - this.points[this.count][0];
             a = this.points[e][1] - this.points[this.count][1];
             g = b * b + a * a;
             if (g < 1000) {
-							  this.context.lineWidth = 1;
                 this.context.strokeStyle = "rgba(" + Math.floor(Math.random() * COLOR[0]) + ", " + Math.floor(Math.random() * COLOR[1]) + ", " + Math.floor(Math.random() * COLOR[2]) + ", " + 0.1 * BRUSH_PRESSURE + " )";
                 this.context.beginPath();
                 this.context.moveTo(this.points[this.count][0] + (b * 0.2), this.points[this.count][1] + (a * 0.2));
@@ -124,16 +123,14 @@ fur.prototype = {
         var e, b, a, g;
         this.points.push([f, c]);
         this.context.lineWidth = BRUSH_SIZE;
-				if (BRUSH_SIZE > 3) {//added 05/15/17 MEDavy
-					this.context.strokeStyle = "rgb(" + COLOR[0] + ", " + COLOR[1] + ", " + COLOR[2] + ")";
-				} else {
-					this.context.strokeStyle = "rgba(" + COLOR[0] + ", " + COLOR[1] + ", " + COLOR[2] + ", " + 0.1 * BRUSH_PRESSURE + ")";
-				}
+				//added 05/16/17 MEDavy
+				this.context.lineCap = "round";
+				//end add
+			  this.context.strokeStyle = "rgba(" + COLOR[0] + ", " + COLOR[1] + ", " + COLOR[2] + ", " + 0.1 * BRUSH_PRESSURE + ")";
         this.context.beginPath();
         this.context.moveTo(this.prevMouseX, this.prevMouseY);
         this.context.lineTo(f, c);
-        this.context.stroke();
-				this.context.strokeStyle = "rgba(" + COLOR[0] + ", " + COLOR[1] + ", " + COLOR[2] + ", " + 0.1 * BRUSH_PRESSURE + ")";
+				this.context.stroke();
         for (e = 0; e < this.points.length; e++) {
             b = this.points[e][0] - this.points[this.count][0];
             a = this.points[e][1] - this.points[this.count][1];
@@ -171,6 +168,9 @@ grid.prototype = {
         g = Math.round(d / 100) * 100;
         c = (a - f) * 10;
         b = (g - d) * 10;
+				//added 05/16/17 MEDavy
+				this.context.lineCap = "round";
+				//end add
         this.context.lineWidth = BRUSH_SIZE;
         this.context.strokeStyle = "rgba(" + COLOR[0] + ", " + COLOR[1] + ", " + COLOR[2] + ", " + 0.01 * BRUSH_PRESSURE + ")";
         for (e = 0; e < 50; e++) {
@@ -203,7 +203,9 @@ longfur.prototype = {
         this.points.push([g, c]);
         this.context.lineWidth = BRUSH_SIZE;
 			  this.context.strokeStyle = "rgba(" + COLOR[0] + ", " + COLOR[1] + ", " + COLOR[2] + ", " + 0.1 * BRUSH_PRESSURE + ")";
-				
+				//added 05/16/17 MEDavy
+				this.context.lineCap = "round";
+				//end add
         for (f = 0; f < this.points.length; f++) {
             e = -Math.random();
             b = this.points[f][0] - this.points[this.count][0];
@@ -252,6 +254,9 @@ ribbon.prototype = {
         function d() {
             var e;
             this.context.lineWidth = BRUSH_SIZE;
+						//added 05/16/17 MEDavy
+				    this.context.lineCap = "round";
+				    //end add
 					  this.context.strokeStyle = "rgba(" + COLOR[0] + ", " + COLOR[1] + ", " + COLOR[2] + ", " + 0.1 * BRUSH_PRESSURE + ")";
             for (e = 0; e < c.painters.length; e++) {
                 c.context.beginPath();
@@ -303,16 +308,17 @@ shaded.prototype = {
         this.prevMouseY = a
     },
     stroke: function(f, c) {
-        this.context.lineWidth = BRUSH_SIZE;
-				if (BRUSH_SIZE > 3) {//added 05/15/17 MEDavy
-					this.context.strokeStyle = "rgb(" + COLOR[0] + ", " + COLOR[1] + ", " + COLOR[2] + ")";
-				} else {
-					this.context.strokeStyle = "rgba(" + COLOR[0] + ", " + COLOR[1] + ", " + COLOR[2] + ", " + ((1 - (g / 1000)) * 0.1 * BRUSH_PRESSURE) + " )";
-				}
-				this.context.beginPath();
+				//added 05/16/17 MEDavy
+			  this.context.lineWidth = BRUSH_SIZE;
+				//added 05/16/17 MEDavy
+				this.context.lineCap = "round";
+				//end add
+				this.context.strokeStyle = "rgba(" + COLOR[0] + ", " + COLOR[1] + ", " + COLOR[2] + ", " + 0.5 * BRUSH_PRESSURE + ")";
+			  this.context.beginPath();
         this.context.moveTo(this.prevMouseX, this.prevMouseY);
         this.context.lineTo(f, c);
         this.context.stroke();
+				//end add
         var e, b, a, g;
         this.points.push([f, c]);
         for (e = 0; e < this.points.length; e++) {
@@ -320,8 +326,7 @@ shaded.prototype = {
             a = this.points[e][1] - this.points[this.count][1];
             g = b * b + a * a;
             if (g < 1000) {
-							  this.context.strokeStyle = "rgba(" + COLOR[0] + ", " + COLOR[1] + ", " + COLOR[2] + ", " + ((1 - (g / 1000)) * 0.1 * BRUSH_PRESSURE) + " )";
-								this.context.lineWidth = 1;
+                this.context.strokeStyle = "rgba(" + COLOR[0] + ", " + COLOR[1] + ", " + COLOR[2] + ", " + ((1 - (g / 1000)) * 0.1 * BRUSH_PRESSURE) + " )";
                 this.context.beginPath();
                 this.context.moveTo(this.points[this.count][0], this.points[this.count][1]);
                 this.context.lineTo(this.points[e][0], this.points[e][1]);
@@ -352,21 +357,18 @@ simple.prototype = {
         this.prevMouseY = a
     },
     stroke: function(b, a) {
-        this.context.lineWidth = BRUSH_SIZE;
-				if (BRUSH_SIZE > 3) {//added 05/15/17 MEDavy
-					this.context.strokeStyle = "rgb(" + COLOR[0] + ", " + COLOR[1] + ", " + COLOR[2] + ")";
-					this.context.fillStyle = "rgb(" + COLOR[0] + ", " + COLOR[1] + ", " + COLOR[2] + ")";
-				} else {
-					this.context.strokeStyle = "rgba(" + COLOR[0] + ", " + COLOR[1] + ", " + COLOR[2] + ", " + 0.5 * BRUSH_PRESSURE + ")";
-					this.context.fillStyle = "rgba(0,0,0,0)";
-				}
+        this.context.lineWidth = BRUSH_SIZE;//added 05/16/17 MEDavy
+				//added 05/16/17 MEDavy
+			  this.context.strokeStyle = "rgb(" + COLOR[0] + ", " + COLOR[1] + ", " + COLOR[2] + ")";
+				this.context.fillStyle = "rgb(" + COLOR[0] + ", " + COLOR[1] + ", " + COLOR[2] + ")";
+				
+				this.context.lineCap = "round";
+				//end add
         this.context.beginPath();
         this.context.moveTo(this.prevMouseX, this.prevMouseY);
         this.context.lineTo(b, a);
         this.context.stroke();
-				this.context.beginPath();
-				this.context.arc(b, a, BRUSH_SIZE/2, 0, 2 * Math.PI);
-				this.context.fill();
+				
         this.prevMouseX = b;
         this.prevMouseY = a
     },
@@ -397,26 +399,26 @@ sketchy.prototype = {
         var e, b, a, g;
         this.points.push([f, c]);
         this.context.lineWidth = BRUSH_SIZE;
-				if (BRUSH_SIZE > 3) {//added 05/15/17 MEDavy
-					this.context.strokeStyle = "rgb(" + COLOR[0] + ", " + COLOR[1] + ", " + COLOR[2] + ")";
-				} else {
-					this.context.strokeStyle = "rgba(" + COLOR[0] + ", " + COLOR[1] + ", " + COLOR[2] + ", " + 0.1 * BRUSH_PRESSURE + ")";
-				}
+				//added 05/16/17 MEDavy
+				this.context.lineCap = "round";
+				//end add
+				this.context.strokeStyle = "rgba(" + COLOR[0] + ", " + COLOR[1] + ", " + COLOR[2] + ", " + 0.1 * BRUSH_PRESSURE + ")";
         this.context.beginPath();
         this.context.moveTo(this.prevMouseX, this.prevMouseY);
         this.context.lineTo(f, c);
         this.context.stroke();
+				//added 05/16/17 MEDavy
 				this.context.lineWidth = 1;
-				this.context.strokeStyle = "rgba(" + COLOR[0] + ", " + COLOR[1] + ", " + COLOR[2] + ", " + 0.1 * BRUSH_PRESSURE + ")";
+				//end add
         for (e = 0; e < this.points.length; e++) {
             b = this.points[e][0] - this.points[this.count][0];
             a = this.points[e][1] - this.points[this.count][1];
             g = b * b + a * a;
             if (g < 4000 && Math.random() > (g / 2000)) {
-                this.context.beginPath();
-                this.context.moveTo(this.points[this.count][0] + (b * 0.3), this.points[this.count][1] + (a * 0.3));
-                this.context.lineTo(this.points[e][0] - (b * 0.3), this.points[e][1] - (a * 0.3));
-                this.context.stroke()
+							this.context.beginPath();
+              this.context.moveTo(this.points[this.count][0] + (b * 0.3), this.points[this.count][1] + (a * 0.3));
+              this.context.lineTo(this.points[e][0] - (b * 0.3), this.points[e][1] - (a * 0.3));
+              this.context.stroke()
             }
         }
         this.prevMouseX = f;
@@ -450,6 +452,9 @@ squares.prototype = {
         e = Math.cos(g) * b - Math.sin(g) * a;
         c = Math.sin(g) * b + Math.cos(g) * a;
         this.context.lineWidth = BRUSH_SIZE;
+				//added 05/16/17 MEDavy
+				this.context.lineCap = "round";
+				//end add
         this.context.fillStyle = "rgba(" + BACKGROUND_COLOR[0] + ", " + BACKGROUND_COLOR[1] + ", " + BACKGROUND_COLOR[2] + ", " + BRUSH_PRESSURE + ")";
         this.context.strokeStyle = "rgba(" + COLOR[0] + ", " + COLOR[1] + ", " + COLOR[2] + ", " + BRUSH_PRESSURE + ")";
         this.context.beginPath();
@@ -490,16 +495,14 @@ web.prototype = {
         var e, b, a, g;
         this.points.push([f, c]);
         this.context.lineWidth = BRUSH_SIZE;
-				if (BRUSH_SIZE > 3) {//added 05/15/17 MEDavy
-					this.context.strokeStyle = "rgb(" + COLOR[0] + ", " + COLOR[1] + ", " + COLOR[2] + ")";
-				} else {
-					this.context.strokeStyle = "rgba(" + COLOR[0] + ", " + COLOR[1] + ", " + COLOR[2] + ", " + 0.5 * BRUSH_PRESSURE + ")";
-				}
+				//added 05/16/17 MEDavy
+				this.context.lineCap = "round";
+				//end add
+				this.context.strokeStyle = "rgba(" + COLOR[0] + ", " + COLOR[1] + ", " + COLOR[2] + ", " + 0.5 * BRUSH_PRESSURE + ")";
         this.context.beginPath();
         this.context.moveTo(this.prevMouseX, this.prevMouseY);
         this.context.lineTo(f, c);
         this.context.stroke();
-			  this.context.strokeStyle = "rgba(" + COLOR[0] + ", " + COLOR[1] + ", " + COLOR[2] + ", " + 0.1 * BRUSH_PRESSURE + ")";//added 05/15/17 MEDavy
 				this.context.lineWidth = 1;
         for (e = 0; e < this.points.length; e++) {
             b = this.points[e][0] - this.points[this.count][0];
@@ -518,6 +521,75 @@ web.prototype = {
     },
     strokeEnd: function() {}
 };
+//added 05/16/17 MEDavy
+function rainbow(a) {
+    this.init(a)
+}
+rainbow.prototype = {
+    context: null,
+    prevMouseX: null,
+    prevMouseY: null,
+		hsl: [0,'100%','50%'],
+    init: function(a) {
+        this.context = a;
+        this.context.globalCompositeOperation = "source-over"
+    },
+    destroy: function() {},
+    strokeStart: function(b, a) {
+        this.prevMouseX = b;
+        this.prevMouseY = a;
+    },
+    stroke: function(b, a) {
+        this.context.lineWidth = BRUSH_SIZE;
+				if (this.hsl[0] >= 360) {
+					this.hsl[0] = 0;
+				}
+				this.hsl[0] = this.hsl[0]+1;
+			  this.context.strokeStyle = "hsl(" + this.hsl[0] + ", " + this.hsl[1] + ", " + this.hsl[2] + ")";
+				this.context.fillStyle = "hsl(" + this.hsl[0] + ", " + this.hsl[1] + ", " + this.hsl[2] + ")";
+				//added 05/16/17 MEDavy
+				this.context.lineCap = "round";
+				//end add
+        this.context.beginPath();
+        this.context.moveTo(this.prevMouseX, this.prevMouseY);
+        this.context.lineTo(b, a);
+        this.context.stroke();
+        this.prevMouseX = b;
+        this.prevMouseY = a
+    },
+    strokeEnd: function() {}
+};
+
+function dots(a) {
+    this.init(a)
+}
+dots.prototype = {
+    context: null,
+    prevMouseX: null,
+    prevMouseY: null,
+    init: function(a) {
+        this.context = a;
+        this.context.globalCompositeOperation = "source-over"
+    },
+    destroy: function() {},
+    strokeStart: function(b, a) {
+        this.prevMouseX = b;
+        this.prevMouseY = a
+    },
+    stroke: function(f, c) {
+			  this.context.lineWidth = BRUSH_SIZE;
+				this.context.fillStyle = "rgb(" + COLOR[0] + ", " + COLOR[1] + ", " + COLOR[2] + ")";
+        if (Math.hypot(f - this.prevMouseX, c - this.prevMouseY) > BRUSH_SIZE) {
+					this.context.beginPath();
+				  this.context.arc(f, c, BRUSH_SIZE/2, 0, 2 * Math.PI);
+				  this.context.fill();
+          this.prevMouseX = f;
+          this.prevMouseY = c
+				}
+    },
+    strokeEnd: function() {}
+};
+//end add
 
 function HSB2RGB(j, d, c) {
     var e, g, l, h, k, b, a, m;
@@ -1012,7 +1084,7 @@ About.prototype = {
     }
 };
 const REV = 8,
-    BRUSHES = ["sketchy", "shaded", "chrome", "fur", "longfur", "web", "", "simple", "squares", "ribbon", "", "circles", "grid"],
+    BRUSHES = ["sketchy", "shaded", "chrome", "fur", "longfur", "web", "", "simple", "squares", "ribbon", "", "rainbow", "dots", "", "circles", "grid"],
     USER_AGENT = navigator.userAgent.toLowerCase();
 var SCREEN_WIDTH = window.innerWidth,
     SCREEN_HEIGHT = window.innerHeight,
@@ -1105,6 +1177,10 @@ function init() {
             BACKGROUND_COLOR[1] = localStorage.background_color_green;
             BACKGROUND_COLOR[2] = localStorage.background_color_blue
         }
+				if (localStorage.brushSize) {
+					BRUSH_SIZE = localStorage.brushSize;
+					setBrushSize(BRUSH_SIZE);
+				}
         document.body.style.backgroundImage = localStorage.bgimage;//added 05/03/17 MEDavy
     }
     foregroundColorSelector.setColor(COLOR);
@@ -1131,11 +1207,18 @@ function init() {
     window.addEventListener("keydown", function(event){event.preventDefault();onWindowKeyDown(event);}, false);
     window.addEventListener("keyup", onWindowKeyUp, false);
     window.addEventListener("blur", onWindowBlur, false);
+		window.addEventListener("beforeunload", beforeUnload, false);
     document.addEventListener("mousedown", onDocumentMouseDown, false);
     document.addEventListener("mouseout", onDocumentMouseOut, false);
     canvas.addEventListener("mousedown", onCanvasMouseDown, false);
     canvas.addEventListener("touchstart", onCanvasTouchStart, false);
     onWindowResize(null);
+}
+
+function beforeUnload() {
+	if (STORAGE) {
+		saveToLocalStorage();
+	}
 }
 
 function onWindowMouseMove(a) {
@@ -1153,15 +1236,11 @@ function onWindowResize() {
 }
 
 function increaseBrush() {//added 05/01/17 MEDavy
-  BRUSH_SIZE++;
-  document.getElementById("pointerSize").innerHTML = BRUSH_SIZE+"px";
+  setBrushSize(BRUSH_SIZE + 1);
 }
 
 function decreaseBrush() {//added 05/01/17 MEDavy
-  if (BRUSH_SIZE > 1) {
-    BRUSH_SIZE--
-    document.getElementById("pointerSize").innerHTML = BRUSH_SIZE+"px";
-  }
+  setBrushSize(BRUSH_SIZE - 1);
 }
 
 function onWindowKeyDown(a) {
@@ -1179,18 +1258,13 @@ function onWindowKeyDown(a) {
             altKeyIsDown = true;
             break;
         case 40://down arrow - changed from 'd' 05/01/16 MEDavy
-            if (BRUSH_SIZE > 1) {
-                BRUSH_SIZE--
-                document.getElementById("pointerSize").innerHTML = BRUSH_SIZE+"px";//added 05/01/17 MEDavy
-            }
+            setBrushSize(BRUSH_SIZE - 1);
             break;
         case 38://up arrow - changed from 'f' 05/01/16 MEDavy
-            BRUSH_SIZE++;
-            document.getElementById("pointerSize").innerHTML = BRUSH_SIZE+"px";//added 05/01/17 MEDavy
-            break
+				  setBrushSize(BRUSH_SIZE + 1);
+          break
         case 37://left arrow - added 05/01/16 MEDavy
-          BRUSH_SIZE=1;//reset brush size
-          document.getElementById("pointerSize").innerHTML = BRUSH_SIZE+"px";//added 05/01/17 MEDavy
+          setBrushSize(1);
           break
         case 8://delete key pressed - added by MEDavy 05/01/17
           onMenuClear();//promt the user to clear canvas
@@ -1212,6 +1286,21 @@ function onWindowKeyDown(a) {
           break
     }
 }
+
+//added 05/16/17 MEDavy
+function setBrushSize(pixels){
+	if (pixels < 1) {
+		BRUSH_SIZE = 1;
+		document.getElementById("pointerSize").innerHTML = "1px";//added 05/01/17 MEDavy
+	}else{
+		BRUSH_SIZE=pixels;
+	  document.getElementById("pointerSize").innerHTML = pixels+"px";//added 05/01/17 MEDavy
+	}
+	if (STORAGE){
+		localStorage.brushSize = BRUSH_SIZE;
+	}
+}
+//end add
 
 function moveMenu() {
 	if (menu.container.style.top == "0px") {
@@ -1336,10 +1425,10 @@ function onMenuClear() {
     flattenCanvas.height = SCREEN_HEIGHT;
     context.clearRect(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
     saveToLocalStorage();
-    menu.selector.selectedIndex = 0;//reset brush type
-    onMenuSelectorChange();//hopefully will fix ios bug 05/05/17 MEDavy
+		onMenuSelectorChange();//hopefully will fix ios bug 05/05/17 MEDavy
     if (IOS) {
       onMenuReset(true);
+			menu.selector.selectedIndex = 0;//reset brush type
     }
 }
 
@@ -1369,7 +1458,7 @@ function onMenuReset(alert) {//added 05/01/17 MEDavy
   COLOR[1] = 0;
   COLOR[2] = 0;
   menu.setForegroundColor(COLOR);
-  BRUSH_SIZE = 1;//reset brush size
+  setBrushSize(1);
   document.getElementById("pointerSize").innerHTML = BRUSH_SIZE+"px";//update pointer size display
   if (STORAGE) {
     localStorage.brush_color_red = COLOR[0];
