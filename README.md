@@ -18,6 +18,7 @@ Procedural drawing app derived from [Harmony](http://mrdoob.com/projects/harmony
 * * Keyboard shortcuts
 * * Preview brush appearance
 * **Reset Brush button**
+* **Move menu out of the way**
 * **Brush size display**
 * **Black borders on color pickers**
 * **Tooltips on menu items**
@@ -28,4 +29,10 @@ Procedural drawing app derived from [Harmony](http://mrdoob.com/projects/harmony
 * * Fixed double events
 * * Different image picker
 * * Buttons for brush size
+* * Disable Grid brush because it doesn't work
 * **Fit canvas to window on clear**
+* **Disable selecting of menu separators**
+* **Two new brushes: Rainbow and Dots**
+* **Rounded ```lineCap```s to improve apearance with large brush size**
+* **Brush size increases only for the main line for effects brushes (Sketchy, Chrome, etc)**
+* **No transparency for Simple brush**
