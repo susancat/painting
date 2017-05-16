@@ -36,3 +36,4 @@ Procedural drawing app derived from [Harmony](http://mrdoob.com/projects/harmony
 * **Rounded ```lineCap```s to improve apearance with large brush size**
 * **Brush size increases only for the main line for effects brushes (Sketchy, Chrome, etc)**
 * **No transparency for Simple brush**
+* **Save image on page close**
