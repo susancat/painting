@@ -1241,7 +1241,7 @@ About.prototype = {
     }
 };
 const REV = 8,
-    BRUSHES = ["eraser", "", "sketchy", "shaded", "chrome", "fur", "longfur", "web", "", "simple", "squares", "ribbon", "", "rainbow", "dots", "glitter", "watercolor", "", "circles", "grid"],
+    BRUSHES = ["sketchy", "shaded", "chrome", "fur", "longfur", "web", "", "simple", "squares", "ribbon", "", "rainbow", "dots", "glitter", "watercolor", "", "circles", "grid", "", "eraser"],
     USER_AGENT = navigator.userAgent.toLowerCase();
 var SCREEN_WIDTH = window.innerWidth,
     SCREEN_HEIGHT = window.innerHeight,
