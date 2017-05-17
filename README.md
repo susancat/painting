@@ -46,3 +46,4 @@ Procedural drawing app derived from [Harmony](http://mrdoob.com/projects/harmony
 * **Buttons to change brush size**
 * **Check for localStorage capabilities rather than setting based on userAgent**
 * **Eraser (finally)**
+* **Clicking the canvas starts drawing**
