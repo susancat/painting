@@ -589,6 +589,40 @@ dots.prototype = {
     },
     strokeEnd: function() {}
 };
+
+function eraser(a) {
+    this.init(a)
+}
+eraser.prototype = {
+    context: null,
+    prevMouseX: null,
+    prevMouseY: null,
+    init: function(a) {
+        this.context = a;
+    },
+    destroy: function() {},
+    strokeStart: function(b, a) {
+        this.prevMouseX = b;
+        this.prevMouseY = a
+				this.context.globalCompositeOperation = "destination-out"
+    },
+    stroke: function(b, a) {
+        this.context.lineWidth = BRUSH_SIZE;
+			  this.context.strokeStyle = "rgb(0,0,0)";
+				this.context.fillStyle = "rgb(0,0,0)";
+				this.context.lineCap = "round";
+        this.context.beginPath();
+        this.context.moveTo(this.prevMouseX, this.prevMouseY);
+        this.context.lineTo(b, a);
+        this.context.stroke();
+			
+        this.prevMouseX = b;
+        this.prevMouseY = a
+    },
+    strokeEnd: function() {
+			this.context.globalCompositeOperation = "source-over"
+		}
+};
 //end add
 
 function HSB2RGB(j, d, c) {
@@ -955,13 +989,27 @@ Menu.prototype = {
         this.container.appendChild(this.files);
         c = document.createTextNode(" ");
         this.container.appendChild(c);
-				
+				//reduce brush size
+				this.reduceBrush = document.createElement("span");
+        this.reduceBrush.className = "button";
+        this.reduceBrush.id = "reduceBrush";
+        this.reduceBrush.innerHTML = "<";
+        this.reduceBrush.title = "Reduce brush size";//added 05/01/17 MEDavy
+        this.container.appendChild(this.reduceBrush);
+				//brush size indicator
         this.pointerSize = document.createElement("span");
         this.pointerSize.className = "button";
         this.pointerSize.id = "pointerSize";
         this.pointerSize.innerHTML = "1px";
-        this.pointerSize.title = "Pointer Size (change using up and down arrow keys)";//added 05/01/17 MEDavy
+        this.pointerSize.title = "Brush Size (change using up and down arrow keys)";//added 05/01/17 MEDavy
         this.container.appendChild(this.pointerSize);
+				//increase brush size
+				this.increaseBrush = document.createElement("span");
+        this.increaseBrush.className = "button";
+        this.increaseBrush.id = "increaseBrush";
+        this.increaseBrush.innerHTML = ">";
+        this.increaseBrush.title = "Increase brush size";//added 05/01/17 MEDavy
+        this.container.appendChild(this.increaseBrush);
         c = document.createTextNode(" ");
         this.container.appendChild(c);
         //end add
@@ -996,14 +1044,18 @@ Menu.prototype = {
         this.clear.title = "Clear Canvas (or press 'delete')";//added 05/01/17 MEDavy
         this.container.appendChild(this.clear);
         //begin add 05/01/17 MEDavy
-				c = document.createTextNode(" ");
+			  c = document.createTextNode(" ");
         this.container.appendChild(c);
-				this.resetButton = document.createElement("span");
+		    this.resetButton = document.createElement("span");
         this.resetButton.className = "button";
-				this.resetButton.id = "resetButton";
+			  this.resetButton.id = "resetButton";
         this.resetButton.innerHTML = "Reset";
-				this.resetButton.title = "Reset Colors and Brush Size (or press 'r')";//added 05/01/17 MEDavy
-        this.container.appendChild(this.resetButton);
+			  this.resetButton.title = "Reset Colors and Brush Size (or press 'r')";//added 05/01/17 MEDavy
+        if (IOS) {
+					this.resetButton.style.visibility = "hidden";
+					this.resetButton.style.display = "none";
+				}
+				this.container.appendChild(this.resetButton);
 				//end add
         d = document.createTextNode(" | ");
         this.container.appendChild(d);
@@ -1084,7 +1136,7 @@ About.prototype = {
     }
 };
 const REV = 8,
-    BRUSHES = ["sketchy", "shaded", "chrome", "fur", "longfur", "web", "", "simple", "squares", "ribbon", "", "rainbow", "dots", "", "circles", "grid"],
+    BRUSHES = ["eraser", "", "sketchy", "shaded", "chrome", "fur", "longfur", "web", "", "simple", "squares", "ribbon", "", "rainbow", "dots", "", "circles", "grid"],
     USER_AGENT = navigator.userAgent.toLowerCase();
 var SCREEN_WIDTH = window.innerWidth,
     SCREEN_HEIGHT = window.innerHeight,
@@ -1109,15 +1161,20 @@ function init() {
     if (USER_AGENT.search("android") > -1 || USER_AGENT.search("iphone") > -1) {
         BRUSH_SIZE = 2
     }
-    if (USER_AGENT.search("safari") > -1 && USER_AGENT.search("chrome") == -1) {
+		STORAGE = isLocalStorageSupported();
+    /*if (USER_AGENT.search("safari") > -1 && USER_AGENT.search("chrome") == -1) {
         STORAGE = false
-    }
+    }*/
     if (/ipad|iphone|ipod/.test(USER_AGENT) && !window.MSStream) {
       IOS = true;
     }
     container = document.createElement("div");
     document.body.appendChild(container);
     canvas = document.createElement("canvas");
+		canvas.id = "canvas";
+		canvas.style.position = "absolute";
+    canvas.style.top = "0px";
+		canvas.style.left = "0px";
     canvas.width = SCREEN_WIDTH;
     canvas.height = SCREEN_HEIGHT;
     canvas.style.cursor = "crosshair";
@@ -1144,6 +1201,8 @@ function init() {
       menu.pointerSize.addEventListener("click", onMenuPointerSize, false);//added 05/01/17 MEDavy
       menu.resetButton.addEventListener("click", onMenuReset, false);//added 05/01/17 MEDavy
       menu.fileButton.addEventListener("click", onMenuFile, false);//added 05/01/17 MEDavy
+			menu.increaseBrush.addEventListener("click", increaseBrush, false)//added 05/16/17 MEDavy
+			menu.reduceBrush.addEventListener("click", decreaseBrush, false)//added 05/16/17 MEDavy
     }
     menu.foregroundColor.addEventListener("touchend", onMenuForegroundColor, false);
     menu.backgroundColor.addEventListener("touchend", onMenuBackgroundColor, false);
@@ -1153,6 +1212,8 @@ function init() {
     menu.pointerSize.addEventListener("touchend", onMenuPointerSize, false);
     menu.resetButton.addEventListener("touchend", onMenuReset, false);
     menu.fileButton.addEventListener("touchend", onMenuFile, false);//added 05/01/17 MEDavy
+		menu.increaseBrush.addEventListener("touchend", increaseBrush, false)//added 05/16/17 MEDavy
+		menu.reduceBrush.addEventListener("touchend", decreaseBrush, false)//added 05/16/17 MEDavy
     menu.selector.addEventListener("change", onMenuSelectorChange, false);
     menu.files.addEventListener('change', handleFileSelect, false);
     menu.container.addEventListener("mouseover", onMenuMouseOver, false);
@@ -1204,6 +1265,7 @@ function init() {
     container.appendChild(about.container);
     window.addEventListener("mousemove", onWindowMouseMove, false);
     window.addEventListener("resize", onWindowResize, false);
+		window.addEventListener("orientationchange", onWindowResize, false);
     window.addEventListener("keydown", function(event){event.preventDefault();onWindowKeyDown(event);}, false);
     window.addEventListener("keyup", onWindowKeyUp, false);
     window.addEventListener("blur", onWindowBlur, false);
@@ -1213,6 +1275,17 @@ function init() {
     canvas.addEventListener("mousedown", onCanvasMouseDown, false);
     canvas.addEventListener("touchstart", onCanvasTouchStart, false);
     onWindowResize(null);
+}
+
+function isLocalStorageSupported() {
+  var testKey = 'test', storage = window.localStorage;
+  try {
+    storage.setItem(testKey, '1');
+    storage.removeItem(testKey);
+    return true;
+  } catch (error) {
+    return false;
+  }
 }
 
 function beforeUnload() {
@@ -1236,11 +1309,11 @@ function onWindowResize() {
 }
 
 function increaseBrush() {//added 05/01/17 MEDavy
-  setBrushSize(BRUSH_SIZE + 1);
+  setBrushSize(Number(BRUSH_SIZE) + 1);
 }
 
 function decreaseBrush() {//added 05/01/17 MEDavy
-  setBrushSize(BRUSH_SIZE - 1);
+  setBrushSize(Number(BRUSH_SIZE) - 1);
 }
 
 function onWindowKeyDown(a) {
@@ -1414,22 +1487,23 @@ function onMenuSave() {
 }
 
 function onMenuClear() {
-    if (!confirm("Discard your drawing?\n(If you have uploaded a background image it will stay)")) {
+    if (!confirm("Discard your drawing? This cannot be undone.")) {
         return
     }
-    SCREEN_WIDTH = window.innerWidth;
-    SCREEN_HEIGHT = window.innerHeight;
-    canvas.width = SCREEN_WIDTH;
-    canvas.height = SCREEN_HEIGHT;
-    flattenCanvas.width = SCREEN_WIDTH;
-    flattenCanvas.height = SCREEN_HEIGHT;
-    context.clearRect(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
-    saveToLocalStorage();
-		onMenuSelectorChange();//hopefully will fix ios bug 05/05/17 MEDavy
-    if (IOS) {
-      onMenuReset(true);
-			menu.selector.selectedIndex = 0;//reset brush type
-    }
+		if (IOS) {
+			document.body.innerHTML = '';
+		  init();
+		} else {
+			SCREEN_WIDTH = window.innerWidth;
+      SCREEN_HEIGHT = window.innerHeight;
+      canvas.width = SCREEN_WIDTH;
+      canvas.height = SCREEN_HEIGHT;
+      flattenCanvas.width = SCREEN_WIDTH;
+      flattenCanvas.height = SCREEN_HEIGHT;
+      context.clearRect(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
+      saveToLocalStorage();
+		  onMenuSelectorChange();//hopefully will fix ios bug 05/05/17 MEDavy
+		}
 }
 
 function onMenuAbout() {
