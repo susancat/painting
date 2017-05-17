@@ -30,6 +30,7 @@ Procedural drawing app derived from [Harmony](http://mrdoob.com/projects/harmony
 * * Different image picker
 * * Buttons for brush size
 * * Disable Grid brush because it doesn't work
+* * Disable Reset button because it doesn't work
 * **Fit canvas to window on clear**
 * **Disable selecting of menu separators**
 * **Two new brushes: Rainbow and Dots**
@@ -37,3 +38,5 @@ Procedural drawing app derived from [Harmony](http://mrdoob.com/projects/harmony
 * **Brush size increases only for the main line for effects brushes (Sketchy, Chrome, etc)**
 * **No transparency for Simple brush**
 * **Save image on page close**
+* **Buttons to change brush size**
+* **Check for localStorage capabilities rather than setting based on userAgent**
