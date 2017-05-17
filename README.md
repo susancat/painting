@@ -40,3 +40,4 @@ Procedural drawing app derived from [Harmony](http://mrdoob.com/projects/harmony
 * **Save image on page close**
 * **Buttons to change brush size**
 * **Check for localStorage capabilities rather than setting based on userAgent**
+* **Eraser (finally)**
