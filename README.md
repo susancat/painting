@@ -31,6 +31,7 @@ Procedural drawing app derived from [Harmony](http://mrdoob.com/projects/harmony
 * * Buttons for brush size
 * * Disable Grid brush because it doesn't work
 * * Disable Reset button because it doesn't work
+* * Prevent scrolling and zooming
 * **Fit canvas to window on clear**
 * **Disable selecting of menu separators**
 * **Two new brushes: Rainbow and Dots**
