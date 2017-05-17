@@ -34,7 +34,11 @@ Procedural drawing app derived from [Harmony](http://mrdoob.com/projects/harmony
 * * Prevent scrolling and zooming
 * **Fit canvas to window on clear**
 * **Disable selecting of menu separators**
-* **Two new brushes: Rainbow and Dots**
+* **Four new brushes:**
+* * Rainbow
+* * Dots
+* * Glitter
+* * Watercolor
 * **Rounded ```lineCap```s to improve apearance with large brush size**
 * **Brush size increases only for the main line for effects brushes (Sketchy, Chrome, etc)**
 * **No transparency for Simple brush**
