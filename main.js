@@ -1794,8 +1794,8 @@ function onMenuReset(alert) {//added 05/01/17 MEDavy	completely rewritten 05/18/
 		//save canvas
 		saveToLocalStorage();
 		//reload from scratch
-		document.body.innerHTML = '';
-		init();
+		//document.body.innerHTML = '';
+		//init();
 	} else {//if localStorage isn't supported
 		//reset brush color
 		COLOR[0] = 0;
