@@ -1150,6 +1150,12 @@ Menu.prototype = {
         this.container.id = "Menu";
         this.container.style.position = "absolute";
         this.container.style.top = "0px";
+				this.draghandle = document.createElement('span');
+				this.draghandle.innerHTML = '  \u22EE  ';
+				this.draghandle.id = "DragHandle";
+				this.draghandle.style.cursor = "move";
+				this.draghandle.title = "Drag to move menu";
+        this.container.appendChild(this.draghandle);
         this.foregroundColor = document.createElement("canvas");
         this.foregroundColor.style.marginBottom = "-3px";
         this.foregroundColor.style.cursor = "pointer";
@@ -1174,7 +1180,7 @@ Menu.prototype = {
         this.fileButton = document.createElement("span");
         this.fileButton.className = "button";
         this.fileButton.id = "fileButton";
-        this.fileButton.innerHTML = "Upload";
+        this.fileButton.innerHTML = "Upl<u style='color:white'>o</u>ad";
         this.fileButton.title = "Load image as background (or press 'o)";
         if (IOS){//if the browser is ios the button won't work so hide it
           this.fileButton.style = "display:none;";
@@ -1238,14 +1244,14 @@ Menu.prototype = {
         this.container.appendChild(d);
         this.save = document.createElement("span");
         this.save.className = "button";
-        this.save.innerHTML = "Save";
+        this.save.innerHTML = "<u style='color:white'>S</u>ave";
         this.save.title = "Save Canvas (or press 's')";//added 05/01/17 MEDavy
         this.container.appendChild(this.save);
         c = document.createTextNode(" ");
         this.container.appendChild(c);
         this.clear = document.createElement("Clear");
         this.clear.className = "button";
-        this.clear.innerHTML = "Clear";
+        this.clear.innerHTML = "<u style='color:white'>C</u>lear";
         this.clear.title = "Clear Canvas (or press 'delete')";//added 05/01/17 MEDavy
         this.container.appendChild(this.clear);
         //begin add 05/01/17 MEDavy
@@ -1254,7 +1260,7 @@ Menu.prototype = {
 		    this.resetButton = document.createElement("span");
         this.resetButton.className = "button";
 			  this.resetButton.id = "resetButton";
-        this.resetButton.innerHTML = "Reset";
+        this.resetButton.innerHTML = "<u style='color:white'>R</u>eset";
 			  this.resetButton.title = "Reset Colors and Brush Size (or press 'r')";//added 05/01/17 MEDavy
         if (IOS) {
 					this.resetButton.style.visibility = "hidden";
@@ -1266,9 +1272,15 @@ Menu.prototype = {
         this.container.appendChild(d);
         this.about = document.createElement("About");
         this.about.className = "button";
-        this.about.innerHTML = "About";
+        this.about.innerHTML = "<u style='color:white'>A</u>bout";
 				this.about.title = "Information about this application";
-        this.container.appendChild(this.about)
+        this.container.appendChild(this.about);
+				this.draghandle2 = document.createElement('span');
+				this.draghandle2.innerHTML = '  \u22EE  ';
+				this.draghandle2.id = "DragHandle2";
+				this.draghandle2.style.cursor = "move";
+				this.draghandle2.title = "Drag to move menu";
+        this.container.appendChild(this.draghandle2);
     },
     setForegroundColor: function(a) {
         var b = this.foregroundColor.getContext("2d");
@@ -1314,7 +1326,7 @@ About.prototype = {
         a.appendChild(b);//edited 05/01/17 MEDavy
         b = document.createElement("p");
         b.style.textAlign = "center";
-        b.innerHTML = 'Shortcuts: </br><span class="key" onclick="increaseBrush();">UP</span>: increase brush size</br><span class="key" onclick="decreaseBrush();">DOWN</span>: decrease brush size</br><span class="key">LEFT</span> default brush size<br /><span class="key">SHIFT</span>: open color picker<br /><span class="key" onclick="moveMenu();">TAB</span>: move menu out of the way<br /><span class="key">R</span>: reset brush<br /><span class="key">O</span>: upload background image<br /><span class="key">DELETE</span>: clear canvas<br /><span class="key">ESC</span>: close about window/color selector<br /><span class="key">ALT+CLICK</span>: set brush color from image<br /><br/><a onclick="writeBackgroundData();" style="cursor:pointer;"><u>Brush Examples</u></a>';//changed to reflect code additions/changes - 05/01/17 MEDavy
+        b.innerHTML = 'Shortcuts: </br><span class="key" onclick="increaseBrush();">UP</span>: increase brush size</br><span class="key" onclick="decreaseBrush();">DOWN</span>: decrease brush size</br><span class="key">LEFT</span> default brush size<br /><span class="key">SHIFT</span>: open color picker<br /><span class="key" onclick="moveMenu();">TAB</span>: move menu out of the way<br /><span class="key">S</span>: download image<br /><span class="key">R</span>: reset brush<br /><span class="key">O</span>: upload background image<br /><span class="key">BACKSPACE</span> or <span class="key">C</span>: clear canvas<br /><span class="key">ESC</span>: close about window/color selector<br /><span class="key">ALT+CLICK</span>: set brush color from image<br />Drag <span class="key">\u22EE</span>s to move menu<br /><br/><a onclick="writeBackgroundData();" style="cursor:pointer;"><u>Brush Examples</u></a>';//changed to reflect code additions/changes - 05/01/17 MEDavy
         a.appendChild(b);
         b = document.createElement("hr");//edited 05/01/17 MEDavy
         a.appendChild(b);//edited 05/01/17 MEDavy
@@ -1348,6 +1360,7 @@ var SCREEN_WIDTH = window.innerWidth,
     BRUSH_SIZE = 1,
     BRUSH_PRESSURE = 1,
     IOS = false,
+		android = false,
     COLOR = [0, 0, 0],
     BACKGROUND_COLOR = [250, 250, 250],
     STORAGE = window.localStorage,
@@ -1374,6 +1387,9 @@ function init() {
     if (/ipad|iphone|ipod/.test(USER_AGENT) && !window.MSStream) {
       IOS = true;
     }
+		if (/Android/.test(navigator.userAgent)) {
+			android = true;
+		}
     container = document.createElement("div");
     document.body.appendChild(container);
     canvas = document.createElement("canvas");
@@ -1397,7 +1413,7 @@ function init() {
     backgroundColorSelector.addEventListener("change", onBackgroundColorSelectorChange, false);
     container.appendChild(backgroundColorSelector.container);
     menu = new Menu();
-    if (!IOS) {//added 05/01/17 MEDavy
+    if (!IOS && !android) {//added 05/01/17 MEDavy
       //in safari on ios, click events are generated on touchend
       menu.foregroundColor.addEventListener("click", onMenuForegroundColor, false);
       menu.backgroundColor.addEventListener("click", onMenuBackgroundColor, false);
@@ -1565,6 +1581,10 @@ function onWindowKeyDown(a) {
           break
 			  case 67:// c key pressed: switch clickToDraw - 05/17/17 MEDavy
 				  clickToDraw = !clickToDraw;
+					onMenuClear();
+					break
+				case 65://a key pressed: open about menubar
+					onMenuAbout();
 					break
     }
 }
@@ -1691,7 +1711,19 @@ function onMenuMouseOut() {
 
 function onMenuSave() {
   flatten();
-  window.open(flattenCanvas.toDataURL("image/png"), "mywindow");
+  /*window.open(flattenCanvas.toDataURL("image/png"), "mywindow");*/
+	if (!android && !IOS) {
+	var file_path = flattenCanvas.toDataURL("image/png");
+	var a = document.createElement('A');
+	a.href = file_path;
+	a.download = 'drawing.png';
+	document.body.appendChild(a);
+	a.click();
+	document.body.removeChild(a);
+	}
+	else {
+		window.open(flattenCanvas.toDataURL("image/png"), "_blank");
+	}
   saveToLocalStorage();
 }
 
@@ -1699,12 +1731,12 @@ function onMenuClear() {
     if (!confirm("Discard your drawing? This cannot be undone.")) {
         return
     }
-		if (STORAGE) {
+		/*if (STORAGE) {
 			context.clearRect(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
 			saveToLocalStorage();
 			document.body.innerHTML = '';
 		  init();
-		} else {
+		} else {*/
 			SCREEN_WIDTH = window.innerWidth;
       SCREEN_HEIGHT = window.innerHeight;
       canvas.width = SCREEN_WIDTH;
@@ -1712,9 +1744,11 @@ function onMenuClear() {
       flattenCanvas.width = SCREEN_WIDTH;
       flattenCanvas.height = SCREEN_HEIGHT;
       context.clearRect(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
+			if (STORAGE) {
       saveToLocalStorage();
+			}
 		  onMenuSelectorChange();//hopefully will fix ios bug 05/05/17 MEDavy
-		}
+		//}
 }
 
 function onMenuAbout() {
@@ -1756,6 +1790,7 @@ function onMenuReset(alert) {//added 05/01/17 MEDavy	completely rewritten 05/18/
       localStorage.background_color_blue = 255;
 		  localStorage.bgimage = "";
 		}
+		document.body.style.backgroundImage = "";
 		//save canvas
 		saveToLocalStorage();
 		//reload from scratch
@@ -1921,3 +1956,67 @@ function cleanPopUps() {
 		}
 		return toReturn;
 }
+
+var selected = null, // Object of the element to be moved
+    x_pos = 0, y_pos = 0, // Stores x & y coordinates of the mouse pointer
+    x_elem = 0, y_elem = 0; // Stores top, left values (edge) of the element
+
+// Will be called when user starts dragging an element
+function _drag_init(elem) {
+    // Store the object of the element which needs to be moved
+    selected = elem;
+		var selectedwidth = selected.offsetWidth;
+		selected.style.minWidth = (selectedwidth - 22) + "px";
+    x_elem = mouseX - selected.offsetLeft;
+    y_elem = mouseY - selected.offsetTop;
+}
+
+// Will be called when user dragging an element
+function _move_elem(e) {
+    x_pos = e.clientX ;
+    y_pos = e.clientY;
+    if (selected !== null) {
+        selected.style.left = (x_pos - x_elem) + 'px';
+        selected.style.top = (y_pos - y_elem) + 'px';
+    }
+		if (selected.offsetLeft < 0) {
+			selected.style.left = "0px";
+		}
+		if (selected.offsetTop < 0) {
+			selected.style.top = "0px";
+		}
+		if (selected.offsetHeight + selected.offsetTop >= window.innerHeight) {
+			selected.style.top = (window.innerHeight - selected.offsetHeight) +"px";
+		}
+		if ((selected.offsetWidth + selected.offsetLeft) >= window.innerWidth) {
+			selected.style.left = (window.innerWidth - selected.offsetWidth) + "px";
+			console.log('Window width:'+window.innerWidth+'\nElement width:'+ menuwidth);
+		}
+}
+
+// Destroy the object when we are done
+function _destroy() {
+    selected = null;
+		document.removeEventListener("mousemove", _move_elem);
+		document.removeEventListener("mouseup", _destroy);
+}
+
+// Bind the functions...
+document.getElementById('DragHandle').onmousedown = function () {
+    _drag_init(document.getElementById('Menu'));
+		document.addEventListener("mousemove", _move_elem);
+		document.addEventListener("mouseup", _destroy);
+		handle = 'left';
+    return false;
+};
+
+document.getElementById('DragHandle2').onmousedown = function () {
+    _drag_init(document.getElementById('Menu'));
+		document.addEventListener("mousemove", _move_elem);
+		document.addEventListener("mouseup", _destroy);
+		handle = 'right';
+    return false;
+};
+
+//document.onmousemove = _move_elem;
+//document.onmouseup = _destroy;
