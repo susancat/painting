@@ -1773,34 +1773,44 @@ function onMenuReset(alert) {//added 05/01/17 MEDavy	completely rewritten 05/18/
       return
     } 
   }
-	//if localStorage is supported
+	
 		//reset localStorage for brush color
+		if (STORAGE) {
 		localStorage.brush_color_red = 0;
     localStorage.brush_color_green = 0;
     localStorage.brush_color_blue = 0;
+		}
 		COLOR[0] = 0;
 		COLOR[1] = 0;
 		COLOR[2] = 0;
 		menu.setForegroundColor(COLOR);
 		//reset localStorage for brush size
+		if (STORAGE) {
 		localStorage.brushSize = 1;
+		}
 		setBrushSize(1);
 		//reset brush type
 		menu.selector.selectedIndex = 0;
     onMenuSelectorChange();
 		//reset localStorage for background color
+		if (STORAGE) {
 		localStorage.background_color_red = 255;
     localStorage.background_color_green = 255;
     localStorage.background_color_blue = 255;
+		}
 		BACKGROUND_COLOR[0] = 255;
 		BACKGROUND_COLOR[1] = 255;
 		BACKGROUND_COLOR[2] = 255;
+		if (STORAGE) {
 		localStorage.bgimage = "";
+		}
 		document.body.style.backgroundImage = "";
 		document.body.style.backgroundColor = "rgb(" + BACKGROUND_COLOR[0] + ", " + BACKGROUND_COLOR[1] + ", " + BACKGROUND_COLOR[2] + ")";
 		menu.setBackgroundColor(BACKGROUND_COLOR);
 		//save canvas
+		if (STORAGE) {
 		saveToLocalStorage();
+		}
 		//reload from scratch
 		//document.body.innerHTML = '';
 		//init();
