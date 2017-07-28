@@ -1361,6 +1361,7 @@ var SCREEN_WIDTH = window.innerWidth,
     BRUSH_PRESSURE = 1,
     IOS = false,
 		android = false,
+		chrome = false,
     COLOR = [0, 0, 0],
     BACKGROUND_COLOR = [250, 250, 250],
     STORAGE = window.localStorage,
@@ -1381,9 +1382,21 @@ function init() {
         BRUSH_SIZE = 2
     }
 		STORAGE = isLocalStorageSupported();
-    /*if (USER_AGENT.search("safari") > -1 && USER_AGENT.search("chrome") == -1) {
-        STORAGE = false
-    }*/
+    var isChromium = window.chrome,
+			winNav = window.navigator,
+			vendorName = winNav.vendor,
+			isOpera = USER_AGENT.indexOf("OPR") > -1,
+			isIEedge = USER_AGENT.indexOf("Edge") > -1,
+			isIOSChrome = USER_AGENT.match("CriOS");
+			if(isIOSChrome){
+				chrome = false;
+				alert("You are not using Google Chrome. This website may not function properly");
+			} else if(isChromium !== null && isChromium !== undefined && vendorName === "Google Inc." && isOpera == false && isIEedge == false) {
+				chrome = true;
+			} else { 
+				chrome = false;
+				alert("You are not using Google Chrome. This website may not function properly");
+			}
     if (/ipad|iphone|ipod/.test(USER_AGENT) && !window.MSStream) {
       IOS = true;
     }
@@ -1986,7 +1999,6 @@ function _move_elem(e) {
 		}
 		if ((selected.offsetWidth + selected.offsetLeft) >= window.innerWidth) {
 			selected.style.left = (window.innerWidth - selected.offsetWidth) + "px";
-			console.log('Window width:'+window.innerWidth+'\nElement width:'+ menuwidth);
 		}
 }
 
