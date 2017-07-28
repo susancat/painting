@@ -1773,52 +1773,38 @@ function onMenuReset(alert) {//added 05/01/17 MEDavy	completely rewritten 05/18/
       return
     } 
   }
-	if (STORAGE) {//if localStorage is supported
+	//if localStorage is supported
 		//reset localStorage for brush color
 		localStorage.brush_color_red = 0;
     localStorage.brush_color_green = 0;
     localStorage.brush_color_blue = 0;
+		COLOR[0] = 0;
+		COLOR[1] = 0;
+		COLOR[2] = 0;
+		menu.setForegroundColor(COLOR);
 		//reset localStorage for brush size
 		localStorage.brushSize = 1;
+		setBrushSize(1);
 		//reset brush type
 		menu.selector.selectedIndex = 0;
     onMenuSelectorChange();
-		//if there is no background image reset localStorage for background color
-		if (!document.body.style.backgroundImage){
-			localStorage.background_color_red = 255;
-      localStorage.background_color_green = 255;
-      localStorage.background_color_blue = 255;
-		  localStorage.bgimage = "";
-		}
+		//reset localStorage for background color
+		localStorage.background_color_red = 255;
+    localStorage.background_color_green = 255;
+    localStorage.background_color_blue = 255;
+		BACKGROUND_COLOR[0] = 255;
+		BACKGROUND_COLOR[1] = 255;
+		BACKGROUND_COLOR[2] = 255;
+		localStorage.bgimage = "";
 		document.body.style.backgroundImage = "";
+		document.body.style.backgroundColor = "rgb(" + BACKGROUND_COLOR[0] + ", " + BACKGROUND_COLOR[1] + ", " + BACKGROUND_COLOR[2] + ")";
+		menu.setBackgroundColor(BACKGROUND_COLOR);
 		//save canvas
 		saveToLocalStorage();
 		//reload from scratch
 		//document.body.innerHTML = '';
 		//init();
-	} else {//if localStorage isn't supported
-		//reset brush color
-		COLOR[0] = 0;
-		COLOR[1] = 0;
-		COLOR[2] = 0;
-		menu.setForegroundColor(COLOR);
-		//reset brush size
-		setBrushSize(1);
-		//reset background color
-		BACKGROUND_COLOR[0] = 255;
-		BACKGROUND_COLOR[1] = 255;
-		BACKGROUND_COLOR[2] = 255;
-		menu.setBackgroundColor(BACKGROUND_COLOR);
-		//if there is no background image set background color
-		if (!document.body.style.backgroundImage){
-			document.body.style.backgroundImage = "";
-      document.body.style.backgroundColor = "rgb(" + BACKGROUND_COLOR[0] + ", " + BACKGROUND_COLOR[1] + ", " + BACKGROUND_COLOR[2] + ")";
-		}
-		//reset brush type
-		menu.selector.selectedIndex = 0;//reset brush type
-		onMenuSelectorChange();//reset brush type	
 	}
-}
 
 function onMenuFile() {//added 05/02/17 MEDavy
   menu.files.click();
