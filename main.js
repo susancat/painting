@@ -1326,7 +1326,7 @@ About.prototype = {
         a.appendChild(b);//edited 05/01/17 MEDavy
         b = document.createElement("p");
         b.style.textAlign = "center";
-        b.innerHTML = 'Shortcuts: </br><span class="key" onclick="increaseBrush();">UP</span>: increase brush size</br><span class="key" onclick="decreaseBrush();">DOWN</span>: decrease brush size</br><span class="key">LEFT</span> default brush size<br /><span class="key">SHIFT</span>: open color picker<br /><span class="key" onclick="moveMenu();">TAB</span>: move menu out of the way<br /><span class="key">S</span>: download image<br /><span class="key">R</span>: reset brush<br /><span class="key">O</span>: upload background image<br /><span class="key">BACKSPACE</span> or <span class="key">C</span>: clear canvas<br /><span class="key">ESC</span>: close about window/color selector<br /><span class="key">CTRL+CLICK</span>: set brush color from image<br />Drag <span class="key">\u22EE</span>s to move menu<br /><br/><a onclick="writeBackgroundData();" style="cursor:pointer;"><u>Brush Examples</u></a>';//changed to reflect code additions/changes - 05/01/17 MEDavy, 04/07/18 MEDavy
+        b.innerHTML = 'Shortcuts: </br><span class="key" onclick="increaseBrush();">UP</span>: increase brush size</br><span class="key" onclick="decreaseBrush();">DOWN</span>: decrease brush size</br><span class="key">LEFT</span> default brush size<br /><span class="key">SHIFT</span>: open foreground color picker<br /><span class="key" onclick="moveMenu();">TAB</span>: move menu out of the way<br /><span class="key">S</span>: download image<br /><span class="key">R</span>: reset brush<br /><span class="key">O</span>: upload background image<br /><span class="key">BACKSPACE</span> or <span class="key">C</span>: clear canvas<br /><span class="key">ESC</span>: close about window/color selector<br /><span class="key">CTRL+CLICK</span>: set brush color from image<br /><span class="key">SCROLL</span>: change brush size<br />Drag <span class="key">\u22EE</span>s to move menu<br /><br/><a onclick="writeBackgroundData();" style="cursor:pointer;"><u>Brush Examples</u></a>';//changed to reflect code additions/changes - 05/01/17 MEDavy, 04/07/18 MEDavy
         a.appendChild(b);
         b = document.createElement("hr");//edited 05/01/17 MEDavy
         a.appendChild(b);//edited 05/01/17 MEDavy
@@ -1499,6 +1499,8 @@ function init() {
     about = new About();
     container.appendChild(about.container);
     window.addEventListener("mousemove", onWindowMouseMove, false);
+    window.addEventListener("mousewheel", onWindowMouseWheel, false);
+    window.addEventListener("DOMMouseScroll", onWindowMouseWheel, false);
     window.addEventListener("resize", onWindowResize, false);
 		window.addEventListener("orientationchange", onWindowResize, false);
     window.addEventListener("keydown", function(event){event.preventDefault();onWindowKeyDown(event);}, false);
@@ -1532,6 +1534,16 @@ function beforeUnload() {
 function onWindowMouseMove(a) {
     mouseX = a.clientX;
     mouseY = a.clientY;
+}
+
+function onWindowMouseWheel(e) {
+        var delta = Math.max(-1, Math.min(1, (e.wheelDelta || -e.detail)));
+        if(delta == 1){
+            increaseBrush();
+        }else if(delta == -1){
+            decreaseBrush();
+        }
+        return false;
 }
 
 function onWindowResize() {
