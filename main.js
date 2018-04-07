@@ -1387,15 +1387,16 @@ function init() {
 			vendorName = winNav.vendor,
 			isOpera = USER_AGENT.indexOf("OPR") > -1,
 			isIEedge = USER_AGENT.indexOf("Edge") > -1,
-			isIOSChrome = USER_AGENT.match("CriOS");
+            isIOSChrome = USER_AGENT.match("CriOS"),
+            isFirefox = navigator.userAgent.toLowerCase().indexOf('firefox') > -1;
 			if(isIOSChrome){
 				chrome = false;
 				alert("You are not using Google Chrome. This website may not function properly");
 			} else if(isChromium !== null && isChromium !== undefined && vendorName === "Google Inc." && isOpera == false && isIEedge == false) {
 				chrome = true;
-			} else { 
+			} else if(isFirefox){}else{
 				chrome = false;
-				alert("You are not using Google Chrome. This website may not function properly");
+				alert("Use the most recent Chrome or Firefox browser for better functionality");
 			}
     if (/ipad|iphone|ipod/.test(USER_AGENT) && !window.MSStream) {
       IOS = true;
