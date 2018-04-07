@@ -1326,7 +1326,7 @@ About.prototype = {
         a.appendChild(b);//edited 05/01/17 MEDavy
         b = document.createElement("p");
         b.style.textAlign = "center";
-        b.innerHTML = 'Shortcuts: </br><span class="key" onclick="increaseBrush();">UP</span>: increase brush size</br><span class="key" onclick="decreaseBrush();">DOWN</span>: decrease brush size</br><span class="key">LEFT</span> default brush size<br /><span class="key">SHIFT</span>: open color picker<br /><span class="key" onclick="moveMenu();">TAB</span>: move menu out of the way<br /><span class="key">S</span>: download image<br /><span class="key">R</span>: reset brush<br /><span class="key">O</span>: upload background image<br /><span class="key">BACKSPACE</span> or <span class="key">C</span>: clear canvas<br /><span class="key">ESC</span>: close about window/color selector<br /><span class="key">ALT+CLICK</span>: set brush color from image<br />Drag <span class="key">\u22EE</span>s to move menu<br /><br/><a onclick="writeBackgroundData();" style="cursor:pointer;"><u>Brush Examples</u></a>';//changed to reflect code additions/changes - 05/01/17 MEDavy
+        b.innerHTML = 'Shortcuts: </br><span class="key" onclick="increaseBrush();">UP</span>: increase brush size</br><span class="key" onclick="decreaseBrush();">DOWN</span>: decrease brush size</br><span class="key">LEFT</span> default brush size<br /><span class="key">SHIFT</span>: open color picker<br /><span class="key" onclick="moveMenu();">TAB</span>: move menu out of the way<br /><span class="key">S</span>: download image<br /><span class="key">R</span>: reset brush<br /><span class="key">O</span>: upload background image<br /><span class="key">BACKSPACE</span> or <span class="key">C</span>: clear canvas<br /><span class="key">ESC</span>: close about window/color selector<br /><span class="key">CTRL+CLICK</span>: set brush color from image<br />Drag <span class="key">\u22EE</span>s to move menu<br /><br/><a onclick="writeBackgroundData();" style="cursor:pointer;"><u>Brush Examples</u></a>';//changed to reflect code additions/changes - 05/01/17 MEDavy, 04/07/18 MEDavy
         a.appendChild(b);
         b = document.createElement("hr");//edited 05/01/17 MEDavy
         a.appendChild(b);//edited 05/01/17 MEDavy
@@ -1562,7 +1562,7 @@ function onWindowKeyDown(a) {
             foregroundColorSelector.container.style.top = mouseY - 125 + "px";
             foregroundColorSelector.container.style.visibility = "visible";
             break;
-        case 18:
+        case 17://ctrl key - changed from 18(alt key) 04/07/18 MEDavy
             altKeyIsDown = true;
             break;
         case 40://down arrow - changed from 'd' 05/01/16 MEDavy
@@ -1631,7 +1631,7 @@ function onWindowKeyUp(event) {
             shiftKeyIsDown = false;
             foregroundColorSelector.container.style.visibility = "hidden";
             break;
-        case 18:
+        case 17://ctrl key, changed from 18 (alt key) 04/07/18 MEDavy
             altKeyIsDown = false;
             break;
         case 82:
@@ -1865,11 +1865,11 @@ function onCanvasMouseDown(b) {
     clearTimeout(saveTimeOut);
     if (!cleanPopUps()){
 			if (altKeyIsDown) {
-        flatten();
-        c = flattenCanvas.getContext("2d").getImageData(0, 0, flattenCanvas.width, flattenCanvas.height).data;
-        a = (b.clientX + (b.clientY * canvas.width)) * 4;
-        foregroundColorSelector.setColor([c[a], c[a + 1], c[a + 2]]);
-        return
+                flatten();
+                c = flattenCanvas.getContext("2d").getImageData(0, 0, flattenCanvas.width, flattenCanvas.height).data;
+                a = (b.clientX + (b.clientY * canvas.width)) * 4;
+                foregroundColorSelector.setColor([c[a], c[a + 1], c[a + 2]]);
+                return
 			}
 			BRUSH_PRESSURE = wacom && wacom.isWacom ? wacom.pressure : 1;
 			brush.strokeStart(b.clientX, b.clientY);
