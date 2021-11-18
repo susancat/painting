@@ -1,82 +1,84 @@
 <!DOCTYPE HTML>
 <html lang="en-us">
     <head>
-        <title>SKETCHY</title>
+        <title>Mindful Ocean</title>
         <meta charset="utf-8"/>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="description" content="Procedural Drawing Tool"/>
         <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
         <meta name="apple-mobile-web-app-capable" content="yes"/>
         <link rel="apple-touch-icon-precomposed" href="appIcon.png"/>
-        <style type="text/css">
-            * {
-                color: #444;
-                font-family: Monospace;
-                font-size: 12px;
-            }
-
-            body {
-                margin: 0px;
-                overflow: hidden;
-								background-repeat: no-repeat;
-								background-size: 100%;
-            }
-
-            select {
-                text-transform: uppercase;
-                font-size: 11px;
-                text-align: center;
-            }
-
-            hr {
-                border: 0;
-                height: 1px;
-                background-color: #ccc;
-                margin: 20px 0px;
-            }
-
-            .gui {
-                color: #ccc;
-                width: auto;
-                background-color: #fff;
-                border: 1px solid #000000;
-								border-radius: 5px;
-                padding: 5px 10px;
-                text-align: center;
-                /*text-transform: uppercase;*/
-                line-height: 18px;
-                cursor: default;
-                overflow-y: auto;
-            }
-
-            .button {
-                padding: 3px;
-                cursor: pointer;
-								background-color: #515151;
-								color: white;
-								border-radius: 5px;
-            }
-						
-						select {
-							padding: 3px;
-              cursor: pointer;
-						  background-color: #515151;
-							color: white;
-						  border-radius: 5px;
-							border-width: 0px;
-						}
-						
-						option {
-							color: white;
-						}
-
-            .key {
-                padding: 0px 8px;
-                margin-left: 1px;
-                background-color: #eee;
-            }
-        </style>
+        <link rel="stylesheet" href="demo-styles.css">
     </head>
     <body>
+      <div id="mainbody">
+        <div id="card">
+          <!-- All you need to put beautiful, interactive 3D content on your site: -->
+          <model-viewer id="model" src="https://cdn.glitch.me/fba9d1c3-4e26-47cd-867f-19660ae37f80%2Ftest-whale-scale-root-bone.glb?v=1636271548450"
+                        ios-src="https://cdn.glitch.me/fba9d1c3-4e26-47cd-867f-19660ae37f80%2Ftest-whale-scale-root-bone-tex.usdz?v=1636599386704"
+                        poster="https://cdn.glitch.me/fba9d1c3-4e26-47cd-867f-19660ae37f80%2Funnamed.png?v=1636256018924"
+                        alt="A 3D model of an astronaut"
+                        shadow-intensity="1"
+                        camera-controls
+                        auto-rotate autoplay ar
+                        ar-modes="webxr scene-viewer quick-look">
+          </model-viewer>
+          <section class="attribution">
+          </section>      
+        </div>
+      </div>     
 		  <script type="text/javascript" charset="utf-8" src="main.js"></script>
+      <script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
+      <script nomodule
+      src="https://unpkg.com/@google/model-viewer/dist/model-viewer-legacy.js">
+     </script>
+  
+  <script>
+    console.log("test")
+    const modelViewerTexture = document.querySelector("model-viewer#model");
+
+    modelViewerTexture.addEventListener("load", () => {
+      
+      let material = modelViewerTexture.model.materials[0];
+                  
+      let newTexture = async (imageSource) => {
+        return await modelViewerTexture.createTexture(imageSource)
+      }
+      
+      let initTexture = async (attr, channel, imageSources) => {
+        let textures = []
+        for (i = 0; i < imageSources.length; i++) {
+          textures.push(await newTexture(imageSources[i]))
+        }
+       
+        material[attr][channel].setTexture(textures[2])
+        
+        let textureIdx = 0
+        setInterval(function(){
+          material[attr][channel].setTexture(textures[textureIdx])
+          textureIdx++
+          if (textureIdx > 2) textureIdx = 0
+        }, 6000)
+      }
+      
+      const bgimage = window.localStorage.bgimage.slice(5,-2);
+
+      //----- test merge -----------------------
+      context.globalCompositeOperation='destination-over';
+      //----------------------------------------
+      let sources = [
+      // "https://cdn.glitch.me/fba9d1c3-4e26-47cd-867f-19660ae37f80%2Funnamed.png?v=1636256018924",
+      //  window.localStorage.bgimage,
+      bgimage,
+      //  window.localStorage.canvas
+      ]
+      
+      initTexture('pbrMetallicRoughness', 'baseColorTexture', sources)      
+      
+    })
+  </script>
     </body>
+    <footer>
+      
+    </footer>
 </html>

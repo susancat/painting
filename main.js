@@ -4,7 +4,7 @@ _gaq.push(["_trackPageview"]);
 (function() {
     
 })();
-
+//--------------------painting tools--------------------------------//
 function circles(a) {
     this.init(a)
 }
@@ -812,6 +812,7 @@ calligraphy.prototype = {
 };
 //end add
 
+//------------painting behavior----------------------------//
 function randomIntegerBetween(min, max) {
     return Math.floor(Math.random() * (+max - +min + +1)) + +min;
 }
@@ -1126,6 +1127,7 @@ function Palette() {
     return e
 }
 
+//---------------------------menu--------------------------------//
 function Menu() {
     this.init()
 }
@@ -1150,18 +1152,18 @@ Menu.prototype = {
         this.container.id = "Menu";
         this.container.style.position = "absolute";
         this.container.style.top = "0px";
-				this.draghandle = document.createElement('span');
-				this.draghandle.innerHTML = '  \u22EE  ';
-				this.draghandle.id = "DragHandle";
-				this.draghandle.style.cursor = "move";
-				this.draghandle.title = "Drag to move menu";
+        this.draghandle = document.createElement('span');
+        this.draghandle.innerHTML = '  \u22EE  ';
+        this.draghandle.id = "DragHandle";
+        this.draghandle.style.cursor = "move";
+        this.draghandle.title = "Drag to move menu";
         this.container.appendChild(this.draghandle);
         this.foregroundColor = document.createElement("canvas");
         this.foregroundColor.style.marginBottom = "-3px";
         this.foregroundColor.style.cursor = "pointer";
         this.foregroundColor.width = e;
         this.foregroundColor.height = a;
-        this.foregroundColor.title = "Change Foreground Color (or press 'shift')";//added 05/01/17 BertrandtheHealer
+        this.foregroundColor.title = "Change Foreground Color";//added 05/01/17 BertrandtheHealer
         this.container.appendChild(this.foregroundColor);
         this.setForegroundColor(COLOR);
         c = document.createTextNode(" ");
@@ -1201,7 +1203,7 @@ Menu.prototype = {
         c = document.createTextNode(" ");
         this.container.appendChild(c);
 				//reduce brush size
-				this.reduceBrush = document.createElement("span");
+		this.reduceBrush = document.createElement("span");
         this.reduceBrush.className = "button";
         this.reduceBrush.id = "reduceBrush";
         this.reduceBrush.innerHTML = "<";
@@ -1401,23 +1403,28 @@ function init() {
     if (/ipad|iphone|ipod/.test(USER_AGENT) && !window.MSStream) {
       IOS = true;
     }
-		if (/Android/.test(navigator.userAgent)) {
-			android = true;
-		}
+    if (/Android/.test(navigator.userAgent)) {
+        android = true;
+    }
+
     container = document.createElement("div");
-    document.body.appendChild(container);
+    container.id = "canvasDiv";
+    document.getElementById('mainbody').appendChild(container);
+    container.gridColumnStart = 1;
+    container.gridColumnEnd = 2;
     canvas = document.createElement("canvas");
-		canvas.id = "canvas";
-		canvas.style.position = "absolute";
+	canvas.id = "canvas";
+	canvas.style.position = "absolute";
     canvas.style.top = "0px";
-		canvas.style.left = "0px";
-    canvas.width = SCREEN_WIDTH;
+	canvas.style.left = "0px";
+    canvas.width = 0.6 * SCREEN_WIDTH;
     canvas.height = SCREEN_HEIGHT;
+    canvas.overflow = "scroll";
     canvas.style.cursor = "crosshair";
     container.appendChild(canvas);
     context = canvas.getContext("2d");
     flattenCanvas = document.createElement("canvas");
-    flattenCanvas.width = SCREEN_WIDTH;
+    flattenCanvas.width = 0.6 * SCREEN_WIDTH;
     flattenCanvas.height = SCREEN_HEIGHT;
     palette = new Palette();
     foregroundColorSelector = new ColorSelector(palette);
@@ -1437,8 +1444,8 @@ function init() {
       menu.pointerSize.addEventListener("click", onMenuPointerSize, false);//added 05/01/17 BertrandtheHealer
       menu.resetButton.addEventListener("click", onMenuReset, false);//added 05/01/17 BertrandtheHealer
       menu.fileButton.addEventListener("click", onMenuFile, false);//added 05/01/17 BertrandtheHealer
-			menu.increaseBrush.addEventListener("click", increaseBrush, false)//added 05/16/17 BertrandtheHealer
-			menu.reduceBrush.addEventListener("click", decreaseBrush, false)//added 05/16/17 BertrandtheHealer
+	  menu.increaseBrush.addEventListener("click", increaseBrush, false)//added 05/16/17 BertrandtheHealer
+	  menu.reduceBrush.addEventListener("click", decreaseBrush, false)//added 05/16/17 BertrandtheHealer
     }
     menu.foregroundColor.addEventListener("touchend", onMenuForegroundColor, false);
     menu.backgroundColor.addEventListener("touchend", onMenuBackgroundColor, false);
@@ -1448,8 +1455,8 @@ function init() {
     menu.pointerSize.addEventListener("touchend", onMenuPointerSize, false);
     menu.resetButton.addEventListener("touchend", onMenuReset, false);
     menu.fileButton.addEventListener("touchend", onMenuFile, false);//added 05/01/17 BertrandtheHealer
-		menu.increaseBrush.addEventListener("touchend", increaseBrush, false)//added 05/16/17 BertrandtheHealer
-		menu.reduceBrush.addEventListener("touchend", decreaseBrush, false)//added 05/16/17 BertrandtheHealer
+	menu.increaseBrush.addEventListener("touchend", increaseBrush, false)//added 05/16/17 BertrandtheHealer
+	menu.reduceBrush.addEventListener("touchend", decreaseBrush, false)//added 05/16/17 BertrandtheHealer
     menu.selector.addEventListener("change", onMenuSelectorChange, false);
     menu.files.addEventListener('change', handleFileSelect, false);
     menu.container.addEventListener("mouseover", onMenuMouseOver, false);
@@ -1503,11 +1510,11 @@ function init() {
     window.addEventListener("mousewheel", onWindowMouseWheel, false);
     window.addEventListener("DOMMouseScroll", onWindowMouseWheel, false);
     window.addEventListener("resize", onWindowResize, false);
-		window.addEventListener("orientationchange", onWindowResize, false);
+	window.addEventListener("orientationchange", onWindowResize, false);
     window.addEventListener("keydown", function(event){event.preventDefault();onWindowKeyDown(event);}, false);
     window.addEventListener("keyup", onWindowKeyUp, false);
     window.addEventListener("blur", onWindowBlur, false);
-		window.addEventListener("beforeunload", beforeUnload, false);
+	window.addEventListener("beforeunload", beforeUnload, false);
     document.addEventListener("mousedown", onDocumentMouseDown, false);
     document.addEventListener("mouseout", onDocumentMouseOut, false);
     canvas.addEventListener("mousedown", onCanvasMouseDown, false);
@@ -1569,12 +1576,12 @@ function onWindowKeyDown(a) {
         return
     }
     switch (a.keyCode) {
-        case 16:
-            shiftKeyIsDown = true;
-            foregroundColorSelector.container.style.left = mouseX - 125 + "px";
-            foregroundColorSelector.container.style.top = mouseY - 125 + "px";
-            foregroundColorSelector.container.style.visibility = "visible";
-            break;
+        // case 16:
+        //     shiftKeyIsDown = true;
+        //     foregroundColorSelector.container.style.left = mouseX - 125 + "px";
+        //     foregroundColorSelector.container.style.top = mouseY - 125 + "px";
+        //     foregroundColorSelector.container.style.visibility = "visible";
+        //     break;
         case 17://ctrl key - changed from 18(alt key) 04/07/18 BertrandtheHealer
             altKeyIsDown = true;
             break;
@@ -1739,7 +1746,14 @@ function onMenuSave() {
   flatten();
   /*window.open(flattenCanvas.toDataURL("image/png"), "mywindow");*/
 	if (!android && !IOS) {
+    var iframe = "<iframe width='100%' height='100%' src='" +localStorage.canvas+ "' id='newTab'></iframe>"
 	var file_path = flattenCanvas.toDataURL("image/png");
+    var x = window.open(flattenCanvas.toDataURL("image/png"), "_blank");
+    // var newImg = document.getElementById('newTab');
+    // newTab.src = "data:image/png;base64," + dataImage;
+    x.document.open();
+      x.document.write(iframe);
+    //   x.document.close();
 	var a = document.createElement('A');
 	a.href = file_path;
 	a.download = 'drawing.png';
@@ -1763,7 +1777,7 @@ function onMenuClear() {
 			document.body.innerHTML = '';
 		  init();
 		} else {*/
-			SCREEN_WIDTH = window.innerWidth;
+	  SCREEN_WIDTH = window.innerWidth;
       SCREEN_HEIGHT = window.innerHeight;
       canvas.width = SCREEN_WIDTH;
       canvas.height = SCREEN_HEIGHT;
@@ -1799,7 +1813,6 @@ function onMenuReset(alert) {//added 05/01/17 BertrandtheHealer	completely rewri
       return
     } 
   }
-	
 		//reset localStorage for brush color
 		if (STORAGE) {
 		localStorage.brush_color_red = 0;
@@ -1820,9 +1833,9 @@ function onMenuReset(alert) {//added 05/01/17 BertrandtheHealer	completely rewri
     onMenuSelectorChange();
 		//reset localStorage for background color
 		if (STORAGE) {
-		localStorage.background_color_red = 255;
-    localStorage.background_color_green = 255;
-    localStorage.background_color_blue = 255;
+            localStorage.background_color_red = 255;
+            localStorage.background_color_green = 255;
+            localStorage.background_color_blue = 255;
 		}
 		BACKGROUND_COLOR[0] = 255;
 		BACKGROUND_COLOR[1] = 255;
