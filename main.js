@@ -4,6 +4,7 @@ _gaq.push(["_trackPageview"]);
 (function() {
     
 })();
+
 //--------------------painting tools--------------------------------//
 function circles(a) {
     this.init(a)
@@ -1407,11 +1408,12 @@ function init() {
         android = true;
     }
 
-    container = document.createElement("div");
-    container.id = "canvasDiv";
-    document.getElementById('mainbody').appendChild(container);
-    container.gridColumnStart = 1;
-    container.gridColumnEnd = 2;
+    // container = document.createElement("div");
+    // container.id = "canvasDiv";
+    // document.getElementById('mainbody').appendChild(container);
+    // container.gridColumnStart = 1;
+    // container.gridColumnEnd = 2;
+    container = document.getElementById("canvasDiv");
     canvas = document.createElement("canvas");
 	canvas.id = "canvas";
 	canvas.style.position = "absolute";
@@ -1742,11 +1744,12 @@ function onMenuMouseOut() {
     isMenuMouseOver = false
 }
 
-function onMenuSave() {
+async function onMenuSave() {
   flatten();
   /*window.open(flattenCanvas.toDataURL("image/png"), "mywindow");*/
 	if (!android && !IOS) {
-    var iframe = "<iframe width='100%' height='100%' src='" +localStorage.canvas+ "' id='newTab'></iframe>"
+    // var iframe = "<div id='overlay'><img src='" +localStorage.canvas+ "' /><iframe width='60vw' height='100vh' frameborder='0' scrolling='no' allowtransparency='true' src='" +localStorage.bgimage.slice(5,-2)+ "' id='newTab'></iframe></div>"
+    var iframe = "<div><img src='" +localStorage.bgimage.slice(5,-2)+ "' style='position: absolute;top: 30px;left: 10px;z-index: -1;' width='60%' height='100%'/><img id='overlay' src='" +localStorage.canvas+ "' /style='z-index: 1;opacity: 0.8';></div>"
 	var file_path = flattenCanvas.toDataURL("image/png");
     var x = window.open(flattenCanvas.toDataURL("image/png"), "_blank");
     // var newImg = document.getElementById('newTab');
@@ -1953,14 +1956,15 @@ function saveToLocalStorage() {
 	localStorage.bgimage = document.body.style.backgroundImage;//added 05/03/17 BertrandtheHealer
 }
 
+//adjust the size of downloaded image here
 function flatten() {
   var img = new Image;
   img.src = document.body.style.backgroundImage.replace('url("', '').replace('")', '');
   var a = flattenCanvas.getContext("2d");
   a.fillStyle = "rgb(" + BACKGROUND_COLOR[0] + ", " + BACKGROUND_COLOR[1] + ", " + BACKGROUND_COLOR[2] + ")";
-  a.fillRect(0, 0, canvas.width, canvas.height);
+  a.fillRect(0, 0, 0.6 * canvas.width, canvas.height);
   //begin add 05/03/17 BertrandtheHealer
-  a.drawImage(img, 0, 0, SCREEN_WIDTH, (SCREEN_WIDTH*img.height)/img.width);//draw resized background image
+  a.drawImage(img, 0, 0, 0.6 * SCREEN_WIDTH, (0.6 * SCREEN_WIDTH*img.height)/img.width);//draw resized background image
   a.drawImage(canvas, 0, 0);
   //end add
 }
