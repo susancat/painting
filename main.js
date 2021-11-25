@@ -1749,7 +1749,7 @@ async function onMenuSave() {
   /*window.open(flattenCanvas.toDataURL("image/png"), "mywindow");*/
 	if (!android && !IOS) {
     // var iframe = "<div id='overlay'><img src='" +localStorage.canvas+ "' /><iframe width='60vw' height='100vh' frameborder='0' scrolling='no' allowtransparency='true' src='" +localStorage.bgimage.slice(5,-2)+ "' id='newTab'></iframe></div>"
-    var iframe = "<div><img src='" +localStorage.bgimage.slice(5,-2)+ "' style='position: absolute;top: 30px;left: 10px;z-index: -1;' width='60%' height='100%'/><img id='overlay' src='" +localStorage.canvas+ "' /style='z-index: 1;opacity: 0.8';></div>"
+    var iframe = "<div><img id='overlay' src='" +localStorage.canvas+ "' /style='z-index: -1;'><img src='" +localStorage.bgimage.slice(5,-2)+ "' style='position: absolute;top: 30px;left: 10px;z-index: 1; opacity: 0.8;' width='60%' height='100%'/></div>"
 	var file_path = flattenCanvas.toDataURL("image/png");
     var x = window.open(flattenCanvas.toDataURL("image/png"), "_blank");
     // var newImg = document.getElementById('newTab');
